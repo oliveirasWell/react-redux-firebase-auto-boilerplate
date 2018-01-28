@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import {FirebaseService} from "../../services/FirebaseService";
 import Table from "../Table/Table";
+import {Route} from 'react-router-dom';
+import {withRouter} from "react-router-dom";
+import Login from "../Login/Login";
+
 
 const styles = {
     container: {
@@ -12,7 +16,7 @@ const styles = {
     },
 };
 
-export default class App extends Component {
+class App extends Component {
 
     constructor(props) {
         super(props);
@@ -20,14 +24,21 @@ export default class App extends Component {
     }
 
     componentWillMount = () => {
-        FirebaseService.getAllLeituras(leituras => {this.setState({data: leituras})}, 20);
+        FirebaseService.getAllLeituras(leituras => {
+            this.setState({data: leituras})
+        }, 20);
     };
+
+    static url = () => '/';
 
     render() {
         return (
             <div style={styles.container}>
-                <Table data={this.state.data}/>
+                <Route exact path={App.url()} component={Login}/>
+                <Route path={Table.url()} render={() => <Table data={this.state.data}/>}/>
             </div>
         );
     }
 }
+
+export default withRouter(App);

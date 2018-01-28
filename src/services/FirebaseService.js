@@ -1,5 +1,4 @@
-import {firebaseDatabase} from '../utils/firebase'
-
+import {firebaseAuth, firebaseDatabase} from '../utils/firebase'
 
 export class FirebaseService {
     static getAllLeituras = (callback, size) => {
@@ -17,4 +16,12 @@ export class FirebaseService {
                 callback(items);
             });
     };
+
+    static login = (email, password) => {
+        return firebaseAuth.signInWithEmailAndPassword(email, password);
+    };
+
+    static logout = () => {
+        return firebaseAuth.signOut();
+    }
 }

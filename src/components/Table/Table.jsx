@@ -1,5 +1,6 @@
 import React from "react";
 import {Line} from "../Line/Line";
+import Logout from "../Logout/Logout.jsx";
 
 export default class Table extends React.Component {
 
@@ -15,6 +16,8 @@ export default class Table extends React.Component {
             data: nextProps.data
         });
     };
+
+    static url = () => '/table';
 
     extractTableInfo = () => {
         const firstItem = this.state.data[0];
@@ -35,14 +38,17 @@ export default class Table extends React.Component {
         const {dataList, header} = this.extractTableInfo();
 
         return (
-            <table>
-                <thead>
-                {header}
-                </thead>
-                <tbody>
-                {dataList}
-                </tbody>
-            </table>
+            <div>
+                <Logout/>
+                <table>
+                    <thead>
+                    {header}
+                    </thead>
+                    <tbody>
+                    {dataList}
+                    </tbody>
+                </table>
+            </div>
         );
     }
 }

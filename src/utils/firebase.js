@@ -1,12 +1,12 @@
 import firebase from 'firebase';
 
 const config = {
-    apiKey: "***************",
-    authDomain: "***************",
-    databaseURL: "***************",
-    projectId: "***************",
-    storageBucket: "***************",
-    messagingSenderId: "***************"
+    apiKey: "AIzaSyDcwu_FqqT64JhZ3O6PR5KcqCjaYL1V18E",
+    authDomain: "esp8266-teste.firebaseapp.com",
+    databaseURL: "https://esp8266-teste.firebaseio.com",
+    projectId: "esp8266-teste",
+    storageBucket: "esp8266-teste.appspot.com",
+    messagingSenderId: "846578518307"
 };
 
 export const firebaseImpl = firebase.initializeApp(config);
