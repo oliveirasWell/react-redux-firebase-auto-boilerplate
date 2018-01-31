@@ -4,6 +4,8 @@ import Logout from "../Logout/Logout.jsx";
 
 export default class Table extends React.Component {
 
+    static url = () => '/table';
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -16,8 +18,6 @@ export default class Table extends React.Component {
             data: nextProps.data
         });
     };
-
-    static url = () => '/table';
 
     extractTableInfo = () => {
         const firstItem = this.state.data[0];

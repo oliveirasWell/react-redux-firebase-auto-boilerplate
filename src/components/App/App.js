@@ -4,6 +4,7 @@ import Table from "../Table/Table";
 import {Route} from 'react-router-dom';
 import {withRouter} from "react-router-dom";
 import Login from "../Login/Login";
+import {firebaseAuth} from "../../utils/firebase";
 
 
 const styles = {
@@ -18,18 +19,21 @@ const styles = {
 
 class App extends Component {
 
+    static url = () => '/';
+
     constructor(props) {
         super(props);
         this.state = {data: []};
     }
 
-    componentWillMount = () => {
-        FirebaseService.getAllLeituras(leituras => {
-            this.setState({data: leituras})
-        }, 20);
+    componentDidMount = () => {
+        firebaseAuth.onAuthStateChanged(authUser => {
+            if (authUser == null) {
+                this.props.history.push('/')
+            }
+        });
+        FirebaseService.getAllLeituras(leituras => this.setState({data: leituras}), 20);
     };
-
-    static url = () => '/';
 
     render() {
         return (
