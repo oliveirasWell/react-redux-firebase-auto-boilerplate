@@ -5,9 +5,11 @@ import Login from "../Login/Login";
 
 const Navigation = (props, { authUser }) => {
 
+    const Component = props.component;
+
     return <div>
         {authUser
-            ? <DataTable {...props} />
+            ? <Component {...props} />
             : <Login/>
         }
     </div>;

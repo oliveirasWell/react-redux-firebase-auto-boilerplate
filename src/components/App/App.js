@@ -26,7 +26,7 @@ class App extends React.Component {
     render() {
         return (
             <div style={styles.container}>
-                <Route exact path={"/login"} render={() => <Navigation dataList={this.state.data}/>}/>
+                <Route exact path={"/login"} render={() => <Navigation component={DataTable} dataList={this.state.data}/>}/>
                 <Route exact path="/" render={() => <DataTable dataList={this.state.data}/>}/>
             </div>
         );
