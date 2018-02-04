@@ -1,9 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DataTable from "../DataTable/DataTable";
 import Login from "../Login/Login";
 
-const Navigation = (props, { authUser }) => {
+const NavigationWrapper = (props, { authUser }) => {
 
     const Component = props.component;
 
@@ -15,8 +14,8 @@ const Navigation = (props, { authUser }) => {
     </div>;
 };
 
-Navigation.contextTypes = {
+NavigationWrapper.contextTypes = {
     authUser: PropTypes.object,
 };
 
-export default Navigation;
+export default NavigationWrapper;

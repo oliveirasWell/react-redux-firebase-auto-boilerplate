@@ -3,8 +3,7 @@ import DataTable from "../DataTable/DataTable";
 import withAuthentication from "../withAuthentication";
 import {Route} from 'react-router-dom';
 import {FirebaseService} from "../../services/FirebaseService";
-import Navigation from "../Navegation/Navegation";
-import Login from "../Login/Login";
+import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
 
 
 const styles = {
@@ -26,7 +25,7 @@ class App extends React.Component {
     render() {
         return (
             <div style={styles.container}>
-                <Route exact path={"/login"} render={() => <Navigation component={DataTable} dataList={this.state.data}/>}/>
+                <Route exact path={"/login"} render={() => <NavigationWrapper component={DataTable} dataList={this.state.data}/>}/>
                 <Route exact path="/" render={() => <DataTable dataList={this.state.data}/>}/>
             </div>
         );

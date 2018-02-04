@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {FirebaseService} from "../../services/FirebaseService";
-import Navigation from "../Navegation/Navegation";
 import PropTypes from "prop-types";
 
 const styles = {
