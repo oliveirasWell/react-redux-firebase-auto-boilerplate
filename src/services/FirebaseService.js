@@ -1,10 +1,11 @@
 import {firebaseAuth, firebaseDatabase} from '../utils/firebase'
+import {nodes} from "../utils/dataBaseNodes";
 
 export class FirebaseService {
     static getAllLeituras = (callback, size) => {
-        firebaseDatabase.ref('leitura')
+        firebaseDatabase.ref(nodes.dataRoot)
             .limitToLast(size)
-            .orderByChild('cliente')
+            .orderByChild(nodes.client)
             .on('value', dataSnapshot => {
                 let items = [];
 

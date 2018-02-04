@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
-import Table from "../Table/Table";
 import {FirebaseService} from "../../services/FirebaseService";
+import Navigation from "../Navegation/Navegation";
+import PropTypes from "prop-types";
 
 const styles = {
     container: {
@@ -23,6 +24,8 @@ const styles = {
 
 class Login extends Component {
 
+    static url = () => '/login';
+
     state = {
         msg: ''
     };
@@ -35,9 +38,16 @@ class Login extends Component {
         const password = this.password.value;
 
         FirebaseService.login(email, password)
-            .then(() => this.props.history.push(Table.url()))
+            .then(() => this.props.history.push("/"))
             .catch(error => this.setState({msg: error.message}));
     };
+
+
+    componentWillMount(){
+        if(this.context.authUser !== null) {
+            this.props.history.push("/")
+        }
+    }
 
     render() {
         return (
@@ -57,5 +67,9 @@ class Login extends Component {
         );
     }
 }
+
+Login.contextTypes = {
+    authUser: PropTypes.object,
+};
 
 export default withRouter(Login);

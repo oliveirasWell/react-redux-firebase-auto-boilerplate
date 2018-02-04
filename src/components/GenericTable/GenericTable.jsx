@@ -1,29 +1,32 @@
 import React from "react";
 import {Line} from "../Line/Line";
-import Logout from "../Logout/Logout.jsx";
+import Logout from "../Logout/Logout";
 
-export default class Table extends React.Component {
+export default class GenericTable extends React.Component {
 
-    static url = () => '/table';
-    
     constructor(props) {
         super(props);
         this.state = {
-            data: this.props.data,
+            tittle:'',
+            dataList: this.props.dataList,
         };
     }
 
     componentWillReceiveProps = nextProps => {
         this.setState({
-            data: nextProps.data
+            dataList: nextProps.dataList
         });
     };
 
     extractTableInfo = () => {
-        const firstItem = this.state.data[0];
+        if (this.state.dataList == null || this.state.dataList === undefined) {
+            return {dataList: null, header: null}
+        }
+
+        const firstItem = this.state.dataList[0];
         const keys = firstItem !== undefined ? Object.keys(firstItem) : [];
 
-        const dataList = this.state.data
+        const dataList = this.state.dataList
             .map((leitura, index) =>
                 <Line dados={leitura} index={index} key={index}/>
             );
@@ -39,8 +42,9 @@ export default class Table extends React.Component {
 
         return (
             <div>
+                <h1>{this.state.tittle}</h1>
                 <Logout/>
-                <table>
+                <table style={{margin: '0 auto'}}>
                     <thead>
                     {header}
                     </thead>
