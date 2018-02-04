@@ -40,10 +40,13 @@ export default class GenericTable extends React.Component {
 
         const {dataList, header} = this.extractTableInfo();
 
+        console.log(!!this.props.store && !!this.props.store.getState() && this.props.store.getState().displayName);
+
         return (
             <div>
                 <h1>{this.state.tittle}</h1>
-                <Logout/>
+                <span>{!!this.props.store && !!this.props.store.getState() && this.props.store.getState().displayName}</span>
+                <Logout store={this.props.store}/>
                 <table style={{margin: '0 auto'}}>
                     <thead>
                     {header}
