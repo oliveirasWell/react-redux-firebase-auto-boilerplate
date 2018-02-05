@@ -7,6 +7,8 @@ import {firebaseAuth} from "../../utils/firebase";
 import Header from "../Header/Header";
 import {login, logout} from "../../actions/actionCreator";
 import PropTypes from "prop-types"
+import {connect} from "react-redux";
+import {nodes} from "../../utils/dataBaseNodes";
 
 const styles = {
     container: {
@@ -32,13 +34,13 @@ class App extends React.Component {
     componentDidMount() {
         firebaseAuth.onAuthStateChanged(authUser => {
             if (authUser) {
-                this.context.store.dispatch(login(authUser));
+                this.props.login(authUser);
             } else {
-                this.context.store.dispatch(logout());
+                this.props.logout();
             }
         });
 
-        FirebaseService.getAllLeituras(leituras => this.setState({data: leituras}), 20);
+        FirebaseService.getAllDataBy(nodes.dataRoot, dataIn => this.setState({data: dataIn}), 20);
         this.setState({in: true});
     };
 
@@ -66,4 +68,11 @@ App.contextTypes = {
   store: PropTypes.object.isRequired,
 };
 
-export default App;
+const mapDispatchToProps = dispatch => {
+    return {
+        login: authUser => dispatch(login(authUser)),
+        logout: () => dispatch(dispatch(logout())),
+    }
+};
+
+export default connect(null, mapDispatchToProps)(App);

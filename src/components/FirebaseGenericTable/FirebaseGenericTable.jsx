@@ -16,7 +16,7 @@ export default class FirebaseGenericTable extends React.Component {
         });
     };
 
-    componentDidMount = () => this.setState({in:true});
+    componentDidMount = () => this.setState({in: true});
 
     extractTableInfo = () => {
         if (this.state.dataList == null || this.state.dataList === undefined) {
@@ -42,14 +42,16 @@ export default class FirebaseGenericTable extends React.Component {
             <Fade in={this.state.in}>
                 <div>
                     <h1>{this.state.tittle}</h1>
-                    <table style={{margin: '0 auto'}}>
-                        <thead>
-                        {header}
-                        </thead>
-                        <tbody>
-                        {dataList}
-                        </tbody>
-                    </table>
+                    <Fade in={dataList.length > 0}>
+                        <table style={{margin: '0 auto'}}>
+                            <thead>
+                            {header}
+                            </thead>
+                            <tbody>
+                            {dataList}
+                            </tbody>
+                        </table>
+                    </Fade>
                 </div>
             </Fade>
         );
