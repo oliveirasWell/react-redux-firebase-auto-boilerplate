@@ -76,7 +76,7 @@ class Login extends Component {
 }
 
 Login.contextTypes = {
-    store: PropTypes.object.required,
+    store: PropTypes.object.isRequired,
 };
 
 export default withRouter(Login);

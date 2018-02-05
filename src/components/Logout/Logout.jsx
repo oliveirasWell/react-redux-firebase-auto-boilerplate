@@ -18,7 +18,7 @@ class Logout extends Component {
 }
 
 Logout.contextTypes = {
-    store: PropTypes.object.required,
+    store: PropTypes.object.isRequired,
 };
 
 export default withRouter(Logout);

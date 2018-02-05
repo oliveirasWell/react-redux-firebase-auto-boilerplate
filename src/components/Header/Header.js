@@ -36,7 +36,7 @@ class Header extends React.Component {
 }
 
 Header.contextTypes = {
-    store: PropTypes.object.required,
+    store: PropTypes.object.isRequired,
 };
 
 export default Header;

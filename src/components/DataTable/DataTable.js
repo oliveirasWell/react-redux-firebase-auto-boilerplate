@@ -12,7 +12,7 @@ class DataTable extends FirebaseGenericTable {
 }
 
 DataTable.contextTypes = {
-    store: PropTypes.object.required,
+    store: PropTypes.object.isRequired,
 };
 
 export default withRouter(DataTable);

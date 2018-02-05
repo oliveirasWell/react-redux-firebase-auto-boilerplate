@@ -26,7 +26,7 @@ class NavigationWrapper extends React.Component {
 }
 
 NavigationWrapper.contextTypes = {
-    store: PropTypes.object.required,
+    store: PropTypes.object.isRequired,
 };
 
 export default NavigationWrapper;

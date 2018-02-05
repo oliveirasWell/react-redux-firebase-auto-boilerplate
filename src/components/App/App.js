@@ -68,7 +68,7 @@ class App extends React.Component {
 }
 
 App.contextTypes = {
-  store: PropTypes.object.required,
+  store: PropTypes.object.isRequired,
 };
 
 export default App;
