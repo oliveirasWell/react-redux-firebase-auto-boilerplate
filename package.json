@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "firebase": "^4.8.1",
-    "prop-types": "latest",
+    "prop-types": "^15.6.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-redux": "^5.0.6",

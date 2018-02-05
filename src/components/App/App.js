@@ -6,6 +6,7 @@ import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
 import {firebaseAuth} from "../../utils/firebase";
 import Header from "../Header/Header";
 import {login, logout} from "../../actions/actionCreator";
+import PropTypes from "prop-types"
 
 const styles = {
     container: {
@@ -32,10 +33,10 @@ class App extends React.Component {
     componentDidMount() {
         firebaseAuth.onAuthStateChanged(authUser => {
             if (authUser) {
-                this.props.store.dispatch(login(authUser));
+                this.context.store.dispatch(login(authUser));
                 return this.setState(() => ({authUser}));
             } else {
-                this.props.store.dispatch(logout());
+                this.context.store.dispatch(logout());
                 return this.setState(() => ({authUser: null}));
             }
         });
@@ -47,7 +48,7 @@ class App extends React.Component {
     render() {
         const propsTable = {
             dataList: this.state.data,
-            store: this.props.store,
+            store: this.context.store,
         };
 
         const propsNav = {
@@ -58,7 +59,7 @@ class App extends React.Component {
         return (
 
                 <div style={styles.container}>
-                    <Header store={this.props.store}/>
+                    <Header store={this.context.store}/>
                     <Route exact path={"/login"} render={() => <NavigationWrapper {...propsNav} />}/>
                     <Route exact path="/"        render={() => <DataTable {...propsTable}/>}/>
                 </div>
@@ -67,5 +68,8 @@ class App extends React.Component {
     };
 }
 
+App.contextTypes = {
+  store: PropTypes.object.required,
+};
 
 export default App;

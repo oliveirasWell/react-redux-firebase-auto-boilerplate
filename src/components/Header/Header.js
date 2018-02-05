@@ -1,6 +1,8 @@
 import React from 'react';
 import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
+import App from "../App/App";
+import PropTypes from "prop-types";
 
 const styles = {
     divAlert: {
@@ -10,24 +12,31 @@ const styles = {
     }
 };
 
-export default class Header extends React.Component {
-    state = {in: false, msg: ''};
+
+class Header extends React.Component {
+    state = {in: false, msg: '', userAuth:null};
 
     componentDidMount = () => {
         this.setState({in: true});
-        this.props.store.subscribe(() => this.setState({msg: this.props.store.getState().msg}));
+        this.context.store.subscribe(() => this.setState({msg: this.context.store.getState().msg}));
+        this.context.store.subscribe(() => this.setState({userAuth: this.context.store.getState().userAuth}));
     };
 
     render = () => {
         return <Fade in={this.state.in}>
             <div style={{textAlign: 'right'}}>
 
-                {this.props.store.msg != null && <div style={styles.divAlert}>{this.props.store.msg} </div>}
+                {this.state.msg != null && <div style={styles.divAlert}>{this.state.msg} </div>}
 
-                {!!this.props.store.getState().userAuth &&
-                <span>{this.props.store.getState().userAuth.displayName} <Logout store={this.props.store}/></span>}
+                {!!this.state.userAuth &&
+                <span>{this.state.userAuth.displayName} <Logout store={this.context.store}/></span>}
             </div>
         </Fade>
     };
+}
+
+Header.contextTypes = {
+    store: PropTypes.object.required,
 };
 
+export default Header;
