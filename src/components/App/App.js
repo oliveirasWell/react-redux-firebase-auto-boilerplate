@@ -22,7 +22,6 @@ class App extends React.Component {
 
     state = {
         data: [],
-        authUser: null,
         in: false,
     };
 
@@ -34,14 +33,12 @@ class App extends React.Component {
         firebaseAuth.onAuthStateChanged(authUser => {
             if (authUser) {
                 this.context.store.dispatch(login(authUser));
-                return this.setState(() => ({authUser}));
             } else {
                 this.context.store.dispatch(logout());
-                return this.setState(() => ({authUser: null}));
             }
         });
 
-        FirebaseService.getAllLeituras(leituras => this.setState({data: leituras}), 20)
+        FirebaseService.getAllLeituras(leituras => this.setState({data: leituras}), 20);
         this.setState({in: true});
     };
 

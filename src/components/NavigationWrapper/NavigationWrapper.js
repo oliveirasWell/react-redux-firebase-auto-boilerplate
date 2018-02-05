@@ -1,6 +1,5 @@
 import React from 'react';
 import Login from "../Login/Login";
-import App from "../App/App";
 import PropTypes from "prop-types";
 
 class NavigationWrapper extends React.Component {
