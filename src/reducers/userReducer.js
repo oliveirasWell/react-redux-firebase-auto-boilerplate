@@ -1,7 +1,6 @@
 import {FirebaseService} from "../services/FirebaseService";
-import {createStore} from "redux";
 
-function userReducer(state = null, action) {
+export function userReducer(state = null, action) {
     if (action.type === 'LOGIN') {
         return action.user;
     }
@@ -14,4 +13,3 @@ function userReducer(state = null, action) {
     return state;
 }
 
-export const store = createStore(userReducer);

@@ -1,21 +1,22 @@
 import React from "react";
 import {TableLine} from "../TableLine/TableLine";
+import Fade from "../Fade/Fade";
 
 export default class FirebaseGenericTable extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            tittle: '',
-            dataList: this.props.dataList,
-        };
-    }
+    state = {
+        tittle: '',
+        dataList: this.props.dataList,
+        in: false,
+    };
 
     componentWillReceiveProps = nextProps => {
         this.setState({
             dataList: nextProps.dataList
         });
     };
+
+    componentDidMount = () => this.setState({in:true});
 
     extractTableInfo = () => {
         if (this.state.dataList == null || this.state.dataList === undefined) {
@@ -38,17 +39,19 @@ export default class FirebaseGenericTable extends React.Component {
     render() {
         const {dataList, header} = this.extractTableInfo();
         return (
-            <div>
-                <h1>{this.state.tittle}</h1>
-                <table style={{margin: '0 auto'}}>
-                    <thead>
-                    {header}
-                    </thead>
-                    <tbody>
-                    {dataList}
-                    </tbody>
-                </table>
-            </div>
+            <Fade in={this.state.in}>
+                <div>
+                    <h1>{this.state.tittle}</h1>
+                    <table style={{margin: '0 auto'}}>
+                        <thead>
+                        {header}
+                        </thead>
+                        <tbody>
+                        {dataList}
+                        </tbody>
+                    </table>
+                </div>
+            </Fade>
         );
     }
 }

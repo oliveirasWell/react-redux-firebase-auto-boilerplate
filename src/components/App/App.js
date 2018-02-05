@@ -4,8 +4,8 @@ import {Route} from 'react-router-dom';
 import {FirebaseService} from "../../services/FirebaseService";
 import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
 import {firebaseAuth} from "../../utils/firebase";
-import {Header} from "../Header/Header";
-import Fade from "../Fade/Fade";
+import Header from "../Header/Header";
+import {login, logout} from "../../actions/actionCreator";
 
 const styles = {
     container: {
@@ -19,14 +19,11 @@ const styles = {
 
 class App extends React.Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: [],
-            authUser: null,
-            in: false,
-        };
-    }
+    state = {
+        data: [],
+        authUser: null,
+        in: false,
+    };
 
     componentWillMount(){
         this.setState({in: false});
@@ -35,10 +32,10 @@ class App extends React.Component {
     componentDidMount() {
         firebaseAuth.onAuthStateChanged(authUser => {
             if (authUser) {
-                this.props.store.dispatch({type: 'LOGIN', user: authUser});
+                this.props.store.dispatch(login(authUser));
                 return this.setState(() => ({authUser}));
             } else {
-                this.props.store.dispatch({type: 'LOGOUT'});
+                this.props.store.dispatch(logout());
                 return this.setState(() => ({authUser: null}));
             }
         });
@@ -59,13 +56,12 @@ class App extends React.Component {
         };
 
         return (
-            <Fade in={this.state.in}>
+
                 <div style={styles.container}>
                     <Header store={this.props.store}/>
                     <Route exact path={"/login"} render={() => <NavigationWrapper {...propsNav} />}/>
                     <Route exact path="/"        render={() => <DataTable {...propsTable}/>}/>
                 </div>
-            </Fade>
 
         );
     };

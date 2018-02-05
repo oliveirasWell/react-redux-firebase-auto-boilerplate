@@ -1,7 +1,8 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {FirebaseService} from "../../services/FirebaseService";
-import PropTypes from "prop-types";
+import Fade from "../Fade/Fade";
+import {globalError} from "../../actions/actionCreator";
 
 const styles = {
     container: {
@@ -24,7 +25,8 @@ const styles = {
 class Login extends Component {
 
     state = {
-        msg: ''
+        msg: '',
+        in: false
     };
 
     login = event => {
@@ -35,37 +37,40 @@ class Login extends Component {
 
         FirebaseService.login(email, password)
             .then(() => this.props.history.push("/"))
-            .catch(error => this.setState({msg: error.message}));
+            .catch(error => {
+                this.setState({msg: error.message});
+                this.props.store.dispatch(globalError(error.message))
+            });
     };
 
-
     componentWillMount() {
-        if (this.props.store.getState() !== null) {
+        if (this.props.store.getState().userAuth !== null) {
             this.props.history.push("/")
         }
     }
 
+    componentDidMount = () => this.setState({in: true});
+
     render() {
         return (
-            <form onSubmit={this.login} style={styles.container}>
-                <div> {this.state.msg} </div>
-                <label>email</label>
-                <br/>
-                <input required={true} style={styles.input} id="email" type="text" ref={input => this.email = input}/>
-                <br/>
-                <label>password</label>
-                <br/>
-                <input required={true} style={styles.input} type="password" ref={input => this.password = input}/>
-                <br/>
-                <br/>
-                <input style={styles.input} type="submit" value="login"/>
-            </form>
+            <Fade in={this.state.in}>
+                <form onSubmit={this.login} style={styles.container}>
+                    <div> {this.state.msg} </div>
+                    <label>email</label>
+                    <br/>
+                    <input required={true} style={styles.input} id="email" type="text"
+                           ref={input => this.email = input}/>
+                    <br/>
+                    <label>password</label>
+                    <br/>
+                    <input required={true} style={styles.input} type="password" ref={input => this.password = input}/>
+                    <br/>
+                    <br/>
+                    <input style={styles.input} type="submit" value="login"/>
+                </form>
+            </Fade>
         );
     }
 }
-
-Login.contextTypes = {
-    authUser: PropTypes.object,
-};
 
 export default withRouter(Login);

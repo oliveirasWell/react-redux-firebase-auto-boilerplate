@@ -1,5 +1,5 @@
 export const isUserLogged = (store, history) => {
-    if (store.getState() == null) {
+    if (store.getState().userAuth == null) {
         history.push('/login');
     }
 };
