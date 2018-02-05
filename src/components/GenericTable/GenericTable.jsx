@@ -7,7 +7,7 @@ export default class GenericTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            tittle:'',
+            tittle: '',
             dataList: this.props.dataList,
         };
     }
@@ -37,16 +37,10 @@ export default class GenericTable extends React.Component {
     };
 
     render() {
-
         const {dataList, header} = this.extractTableInfo();
-
-        console.log(!!this.props.store && !!this.props.store.getState() && this.props.store.getState().displayName);
-
         return (
             <div>
                 <h1>{this.state.tittle}</h1>
-                <span>{!!this.props.store && !!this.props.store.getState() && this.props.store.getState().displayName}</span>
-                <Logout store={this.props.store}/>
                 <table style={{margin: '0 auto'}}>
                     <thead>
                     {header}

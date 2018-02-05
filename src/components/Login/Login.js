@@ -23,14 +23,11 @@ const styles = {
 
 class Login extends Component {
 
-    static url = () => '/login';
-
     state = {
         msg: ''
     };
 
     login = event => {
-
         event.preventDefault();
 
         const email = this.email.value;
@@ -43,7 +40,7 @@ class Login extends Component {
 
 
     componentWillMount(){
-        if(this.context.authUser !== null) {
+        if(this.props.store.getState() !== null) {
             this.props.history.push("/")
         }
     }

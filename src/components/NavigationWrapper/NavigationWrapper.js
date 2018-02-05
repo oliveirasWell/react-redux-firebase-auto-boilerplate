@@ -1,21 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Login from "../Login/Login";
 
-const NavigationWrapper = (props, { authUser }) => {
+class NavigationWrapper extends React.Component {
+    constructor(props){
+        super(props);
+        this.Component = props.component;
+    }
 
-    const Component = props.component;
-
-    return <div>
-        {authUser
-            ? <Component {...props} />
-            : <Login/>
+    render() {
+        return <div>
+        {this.props.store.getState() != null
+            ? <this.Component {...this.props} />
+            : <Login {...this.props}/>
         }
-    </div>;
-};
-
-NavigationWrapper.contextTypes = {
-    authUser: PropTypes.object,
-};
+    </div>}
+}
 
 export default NavigationWrapper;

@@ -1,11 +1,11 @@
 import React from 'react';
 import DataTable from "../DataTable/DataTable";
-import withAuthentication from "../withAuthentication";
 import {Route} from 'react-router-dom';
 import {FirebaseService} from "../../services/FirebaseService";
 import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
-import {createStore} from 'redux';
 import {firebaseAuth} from "../../utils/firebase";
+import {store} from "../../reducers/userReducer";
+import {Header} from "../Header/Header";
 
 const styles = {
     container: {
@@ -18,35 +18,26 @@ const styles = {
 };
 
 
-
-
-function usuario(state=null, action) {
-
-    console.log(action);
-
-    if (action.type === 'LOGIN') {
-        return action.user;
-    }
-
-    if (action.type === 'LOGOUT') {
-        FirebaseService.logout();
-        return null;
-    }
-
-    return state;
-}
-
-const store = createStore(usuario);
-
 class App extends React.Component {
 
-    state = {data: []};
+    constructor(props) {
+        super(props);
 
-    componentWillMount = () => {
+        this.state = {
+            data: [],
+            authUser: null,
+        };
+    }
+
+    componentDidMount() {
         firebaseAuth.onAuthStateChanged(authUser => {
-            return authUser
-                ? store.dispatch({type:'LOGIN', user:authUser})
-                : store.dispatch({type:'LOGOUT'});
+            if (authUser) {
+                store.dispatch({type: 'LOGIN', user: authUser});
+                return this.setState(() => ({authUser}));
+            } else {
+                store.dispatch({type: 'LOGOUT'});
+                return this.setState(() => ({authUser: null}));
+            }
         });
 
         FirebaseService.getAllLeituras(leituras => this.setState({data: leituras}), 20)
@@ -55,11 +46,15 @@ class App extends React.Component {
     render() {
         return (
             <div style={styles.container}>
-                <Route exact path={"/login"} render={() => <NavigationWrapper component={DataTable} dataList={this.state.data}/>}/>
+                <Header store={store}/>
+                <Route exact path={"/login"}
+                       render={() => <NavigationWrapper component={DataTable} dataList={this.state.data}
+                                                        store={store}/>}/>
                 <Route exact path="/" render={() => <DataTable dataList={this.state.data} store={store}/>}/>
             </div>
         );
     };
 }
 
-export default withAuthentication(App)
+
+export default App;
