@@ -18,15 +18,11 @@ class Logout extends Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {};
-};
-
 const mapDispatchToProps = dispatch => {
     return {logout: () => dispatch(logout())};
 };
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(null, mapDispatchToProps)
 )(Logout);

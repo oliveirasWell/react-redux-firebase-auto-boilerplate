@@ -4,6 +4,8 @@ import {FirebaseService} from "../../services/FirebaseService";
 import Fade from "../Fade/Fade";
 import {globalError} from "../../actions/actionCreator";
 import PropTypes from "prop-types";
+import {compose} from "recompose";
+import {connect} from "react-redux";
 
 const styles = {
     container: {
@@ -26,7 +28,8 @@ const styles = {
 class Login extends Component {
 
     state = {
-        in: false
+        in: false,
+        userAuth: null
     };
 
     login = event => {
@@ -37,16 +40,16 @@ class Login extends Component {
 
         FirebaseService.login(email, password)
             .then(() => {
-                this.context.store.dispatch(globalError(null));
+                this.props.cleanMessages();
                 this.props.history.push("/");
             })
             .catch(error => {
-                this.context.store.dispatch(globalError(error.message))
+                this.props.sendError(error.message);
             });
     };
 
     componentWillMount() {
-        if (this.context.store.getState().userAuth !== null) {
+        if (this.props.userAuth !== null) {
             this.props.history.push("/")
         }
     }
@@ -78,4 +81,18 @@ Login.contextTypes = {
     store: PropTypes.object.isRequired,
 };
 
-export default withRouter(Login);
+const mapStateToProps = state => {
+    return {userAuth: state.userAuth};
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        sendError: message => dispatch(globalError(message)),
+        cleanMessages: () => dispatch(globalError(null))
+    };
+};
+
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Login);
