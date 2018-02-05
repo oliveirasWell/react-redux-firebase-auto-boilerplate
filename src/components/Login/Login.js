@@ -3,6 +3,8 @@ import {withRouter} from "react-router-dom";
 import {FirebaseService} from "../../services/FirebaseService";
 import Fade from "../Fade/Fade";
 import {globalError} from "../../actions/actionCreator";
+import App from "../App/App";
+import PropTypes from "prop-types";
 
 const styles = {
     container: {
@@ -36,16 +38,16 @@ class Login extends Component {
 
         FirebaseService.login(email, password)
             .then(() => {
-                this.props.store.dispatch(globalError(null));
+                this.context.store.dispatch(globalError(null));
                 this.props.history.push("/");
             })
             .catch(error => {
-                this.props.store.dispatch(globalError(error.message))
+                this.context.store.dispatch(globalError(error.message))
             });
     };
 
     componentWillMount() {
-        if (this.props.store.getState().userAuth !== null) {
+        if (this.context.store.getState().userAuth !== null) {
             this.props.history.push("/")
         }
     }
@@ -72,5 +74,9 @@ class Login extends Component {
         );
     }
 }
+
+Login.contextTypes = {
+    store: PropTypes.object.required,
+};
 
 export default withRouter(Login);

@@ -48,7 +48,6 @@ class App extends React.Component {
     render() {
         const propsTable = {
             dataList: this.state.data,
-            store: this.context.store,
         };
 
         const propsNav = {

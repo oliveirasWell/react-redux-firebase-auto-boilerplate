@@ -1,5 +1,7 @@
 import React from 'react';
 import Login from "../Login/Login";
+import App from "../App/App";
+import PropTypes from "prop-types";
 
 class NavigationWrapper extends React.Component {
     constructor(props) {
@@ -10,7 +12,7 @@ class NavigationWrapper extends React.Component {
 
 
     componentDidMount = () => {
-        this.props.store.subscribe(() => this.setState({userAuth: this.props.store.getState().userAuth}));
+        this.context.store.subscribe(() => this.setState({userAuth: this.context.store.getState().userAuth}));
     };
 
     render() {
@@ -22,5 +24,9 @@ class NavigationWrapper extends React.Component {
         </div>
     }
 }
+
+NavigationWrapper.contextTypes = {
+    store: PropTypes.object.required,
+};
 
 export default NavigationWrapper;
