@@ -4,8 +4,8 @@ import {Route} from 'react-router-dom';
 import {FirebaseService} from "../../services/FirebaseService";
 import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
 import {firebaseAuth} from "../../utils/firebase";
-import {store} from "../../reducers/userReducer";
 import {Header} from "../Header/Header";
+import Fade from "../Fade/Fade";
 
 const styles = {
     container: {
@@ -17,41 +17,56 @@ const styles = {
     },
 };
 
-
 class App extends React.Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             data: [],
             authUser: null,
+            in: false,
         };
+    }
+
+    componentWillMount(){
+        this.setState({in: false});
     }
 
     componentDidMount() {
         firebaseAuth.onAuthStateChanged(authUser => {
             if (authUser) {
-                store.dispatch({type: 'LOGIN', user: authUser});
+                this.props.store.dispatch({type: 'LOGIN', user: authUser});
                 return this.setState(() => ({authUser}));
             } else {
-                store.dispatch({type: 'LOGOUT'});
+                this.props.store.dispatch({type: 'LOGOUT'});
                 return this.setState(() => ({authUser: null}));
             }
         });
 
         FirebaseService.getAllLeituras(leituras => this.setState({data: leituras}), 20)
+        this.setState({in: true});
     };
 
     render() {
+        const propsTable = {
+            dataList: this.state.data,
+            store: this.props.store,
+        };
+
+        const propsNav = {
+            ...propsTable,
+            component: DataTable,
+        };
+
         return (
-            <div style={styles.container}>
-                <Header store={store}/>
-                <Route exact path={"/login"}
-                       render={() => <NavigationWrapper component={DataTable} dataList={this.state.data}
-                                                        store={store}/>}/>
-                <Route exact path="/" render={() => <DataTable dataList={this.state.data} store={store}/>}/>
-            </div>
+            <Fade in={this.state.in}>
+                <div style={styles.container}>
+                    <Header store={this.props.store}/>
+                    <Route exact path={"/login"} render={() => <NavigationWrapper {...propsNav} />}/>
+                    <Route exact path="/"        render={() => <DataTable {...propsTable}/>}/>
+                </div>
+            </Fade>
+
         );
     };
 }

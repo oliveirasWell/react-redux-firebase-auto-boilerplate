@@ -39,8 +39,8 @@ class Login extends Component {
     };
 
 
-    componentWillMount(){
-        if(this.props.store.getState() !== null) {
+    componentWillMount() {
+        if (this.props.store.getState() !== null) {
             this.props.history.push("/")
         }
     }

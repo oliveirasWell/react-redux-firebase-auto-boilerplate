@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Line = ({dados, index}) => {
+export const TableLine = ({dados, index}) => {
 
     const keys = Object.keys(dados);
 

@@ -1,8 +1,7 @@
 import React from "react";
-import {Line} from "../Line/Line";
-import Logout from "../Logout/Logout";
+import {TableLine} from "../TableLine/TableLine";
 
-export default class GenericTable extends React.Component {
+export default class FirebaseGenericTable extends React.Component {
 
     constructor(props) {
         super(props);
@@ -28,7 +27,7 @@ export default class GenericTable extends React.Component {
 
         const dataList = this.state.dataList
             .map((leitura, index) =>
-                <Line dados={leitura} index={index} key={index}/>
+                <TableLine dados={leitura} index={index} key={index}/>
             );
 
         const header = (<tr>{keys.map((key, index) => <th key={index}> {key} </th>)}</tr>);

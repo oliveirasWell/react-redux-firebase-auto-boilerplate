@@ -1,12 +1,11 @@
-import React from "react";
-import GenericTable from "../GenericTable/GenericTable";
+import GenericTable from "../FirebaseGenericTable/FirebaseGenericTable";
 import {withRouter} from "react-router-dom";
 import {isUserLogged} from "../../utils/session";
 
 class DataTable extends GenericTable {
-    componentWillMount(){
+    componentWillMount() {
         this.props.history.replace('/');
-        this.setState({tittle:'Data Table'});
+        this.setState({tittle: 'Data Table'});
         isUserLogged(this.props.store, this.props.history);
     }
 }
