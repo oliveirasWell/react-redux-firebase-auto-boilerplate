@@ -1,7 +1,6 @@
 import React from 'react';
 import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
-import App from "../App/App";
 import PropTypes from "prop-types";
 
 const styles = {

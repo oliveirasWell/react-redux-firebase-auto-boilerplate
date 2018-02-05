@@ -3,7 +3,6 @@ import {withRouter} from "react-router-dom";
 import {FirebaseService} from "../../services/FirebaseService";
 import Fade from "../Fade/Fade";
 import {globalError} from "../../actions/actionCreator";
-import App from "../App/App";
 import PropTypes from "prop-types";
 
 const styles = {

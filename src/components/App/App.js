@@ -56,13 +56,11 @@ class App extends React.Component {
         };
 
         return (
-
                 <div style={styles.container}>
                     <Header store={this.context.store}/>
                     <Route exact path={"/login"} render={() => <NavigationWrapper {...propsNav} />}/>
                     <Route exact path="/"        render={() => <DataTable {...propsTable}/>}/>
                 </div>
-
         );
     };
 }
