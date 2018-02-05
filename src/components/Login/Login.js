@@ -25,7 +25,6 @@ const styles = {
 class Login extends Component {
 
     state = {
-        msg: '',
         in: false
     };
 
@@ -36,9 +35,11 @@ class Login extends Component {
         const password = this.password.value;
 
         FirebaseService.login(email, password)
-            .then(() => this.props.history.push("/"))
+            .then(() => {
+                this.props.store.dispatch(globalError(null));
+                this.props.history.push("/");
+            })
             .catch(error => {
-                this.setState({msg: error.message});
                 this.props.store.dispatch(globalError(error.message))
             });
     };
@@ -55,7 +56,6 @@ class Login extends Component {
         return (
             <Fade in={this.state.in}>
                 <form onSubmit={this.login} style={styles.container}>
-                    <div> {this.state.msg} </div>
                     <label>email</label>
                     <br/>
                     <input required={true} style={styles.input} id="email" type="text"

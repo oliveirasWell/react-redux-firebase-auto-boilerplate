@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import {withRouter} from "react-router-dom";
+import PropTypes from "prop-types";
+import {logout} from "../../actions/actionCreator";
 
 class Logout extends Component {
 
     logout = () => {
-        this.props.store.dispatch({type: 'LOGOUT'});
+        this.context.store.dispatch(logout());
         this.props.history.push('/login');
     };
 
@@ -14,5 +16,9 @@ class Logout extends Component {
         );
     }
 }
+
+Logout.contextTypes = {
+    store: PropTypes.object.required,
+};
 
 export default withRouter(Logout);

@@ -29,7 +29,7 @@ class Header extends React.Component {
                 {this.state.msg != null && <div style={styles.divAlert}>{this.state.msg} </div>}
 
                 {!!this.state.userAuth &&
-                <span>{this.state.userAuth.displayName} <Logout store={this.context.store}/></span>}
+                <span>{this.state.userAuth.displayName} <Logout/></span>}
             </div>
         </Fade>
     };
