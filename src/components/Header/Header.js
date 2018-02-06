@@ -37,8 +37,9 @@ class Header extends React.Component {
             <div style={styles.divFlex}>
                 <div style={{...styles.div, float: 'left'}}>
                     <span style={{fontWeight: 900, color: '#000000'}}>React</span><span
-                    style={{fontWeight: 900, color: '#0e0e0e'}}>Redux</span><span
-                    style={{fontWeight: 900, color: '#383838'}}>Firebase</span>Example
+                    style={{fontWeight: 900, color: '#2f2f2f'}}>Redux</span><span
+                    style={{fontWeight: 900, color: '#484848'}}>Firebase</span>
+                    Example
                 </div>
                 <div style={{...styles.div, float: 'right'}}>
                 {!!this.props.userAuth &&
