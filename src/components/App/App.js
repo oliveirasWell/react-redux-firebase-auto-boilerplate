@@ -1,6 +1,6 @@
 import React from 'react';
 import DataTable from "../DataTable/DataTable";
-import {Route} from 'react-router-dom';
+import {Route, withRouter} from 'react-router-dom';
 import {FirebaseService} from "../../services/FirebaseService";
 import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
 import {firebaseAuth} from "../../utils/firebase";
@@ -75,4 +75,4 @@ const mapDispatchToProps = dispatch => {
     }
 };
 
-export default connect(null, mapDispatchToProps)(App);
+export default withRouter(connect(null, mapDispatchToProps)(App));

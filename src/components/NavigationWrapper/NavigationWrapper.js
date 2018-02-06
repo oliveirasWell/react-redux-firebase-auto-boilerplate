@@ -1,22 +1,17 @@
 import React from 'react';
 import Login from "../Login/Login";
 import PropTypes from "prop-types";
+import {connect} from "react-redux";
 
 class NavigationWrapper extends React.Component {
     constructor(props) {
         super(props);
         this.Component = props.component;
-        this.state = {userAuth:null};
     }
-
-
-    componentDidMount = () => {
-        this.context.store.subscribe(() => this.setState({userAuth: this.context.store.getState().userAuth}));
-    };
 
     render() {
         return <div>
-            {this.state.userAuth != null
+            {this.props.userAuth != null && this.props.userAuth !== undefined
                 ? <this.Component {...this.props} />
                 : <Login {...this.props}/>
             }
@@ -28,4 +23,8 @@ NavigationWrapper.contextTypes = {
     store: PropTypes.object.isRequired,
 };
 
-export default NavigationWrapper;
+const mapStateToProps = state => {
+    return {userAuth: state.userAuth}
+};
+
+export default connect(mapStateToProps)(NavigationWrapper);
