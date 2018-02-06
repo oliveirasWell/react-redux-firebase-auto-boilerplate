@@ -6,28 +6,24 @@ import {globalError} from "../../actions/actionCreator";
 import PropTypes from "prop-types";
 import {compose} from "recompose";
 import {connect} from "react-redux";
+import FontAwesome from 'react-fontawesome';
 
 const styles = {
     container: {
-        textAlign: 'center',
-        paddingTop: '15em',
         position: 'flex',
         margin: '2em',
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#ddd',
-        fontFamily: 'sans-serif',
     },
     input: {
-        margin: '5px',
-        width: '20em',
+        marginBottom: '5px',
+        width: '60%',
+        display: 'block'
     },
-
 };
 
 class Login extends Component {
 
     state = {
+        clickedLogin: false,
         in: false,
         userAuth: null
     };
@@ -35,6 +31,7 @@ class Login extends Component {
     login = event => {
         event.preventDefault();
 
+        this.setState({clickedLogin: true});
         const email = this.email.value;
         const password = this.password.value;
 
@@ -46,9 +43,13 @@ class Login extends Component {
             .catch(error => {
                 this.props.sendError(error.message);
             });
+
+        this.setState({clickedLogin: false});
+
     };
 
     componentWillMount() {
+        this.setState({clickedLogin: false});
         if (this.props.userAuth !== null) {
             this.props.history.push("/")
         }
@@ -62,15 +63,19 @@ class Login extends Component {
                 <form onSubmit={this.login} style={styles.container}>
                     <label>email</label>
                     <br/>
-                    <input required={true} style={styles.input} id="email" type="text"
+                    <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
                            ref={input => this.email = input}/>
                     <br/>
                     <label>password</label>
                     <br/>
-                    <input required={true} style={styles.input} type="password" ref={input => this.password = input}/>
+                    <input className={'circularInput'} required={true} style={styles.input} type="password"
+                           ref={input => this.password = input}/>
                     <br/>
                     <br/>
-                    <input style={styles.input} type="submit" value="login"/>
+                    <div>
+                        {this.state.clickedLogin && <FontAwesome name='bolt' spin/>}
+                    </div>
+                    <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
                 </form>
             </Fade>
         );

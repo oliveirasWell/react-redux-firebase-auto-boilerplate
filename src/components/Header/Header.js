@@ -7,11 +7,18 @@ import {connect} from "react-redux";
 const styles = {
     divAlert: {
         textAlign: 'center',
-        color: 'red',
-        fontWeight: '600'
+        color: '#b94424',
+        fontWeight: '500',
+        textTransform: 'uppercase'
     },
     div: {
-        textAlign: 'right'
+        maxWidth: '50%',
+        margin: '0'
+    },
+    divFlex: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between'
     }
 };
 
@@ -24,10 +31,19 @@ class Header extends React.Component {
 
     render = () => {
         return <Fade in={this.state.in}>
-            <div style={styles.div}>
-                {this.props.msg != null && <div style={styles.divAlert}>{this.props.msg} </div>}
+            {this.props.msg != null && <Fade in={this.props.msg != null && this.props.msg !== ''}>
+                <div style={styles.divAlert}>{this.props.msg}</div>
+            </Fade>}
+            <div style={styles.divFlex}>
+                <div style={{...styles.div, float: 'left'}}>
+                    <span style={{fontWeight: 900, color: '#000000'}}>React</span><span
+                    style={{fontWeight: 900, color: '#0e0e0e'}}>Redux</span><span
+                    style={{fontWeight: 900, color: '#383838'}}>Firebase</span>Example
+                </div>
+                <div style={{...styles.div, float: 'right'}}>
                 {!!this.props.userAuth &&
                 <span>{this.props.userAuth.displayName} <Logout/></span>}
+                </div>
             </div>
         </Fade>
     };

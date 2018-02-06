@@ -7,19 +7,19 @@ import {compose} from "recompose";
 class Logout extends Component {
 
     click = () => {
-        this.props.logout();
+        this.props.logoutOfFirebase();
         this.props.history.push('/login');
     };
 
     render() {
         return (
-            <button onClick={this.click}>Logout</button>
+            <button className={'circularButton'} onClick={this.click}>logout</button>
         );
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return {logout: () => dispatch(logout())};
+    return {logoutOfFirebase: () => dispatch(logout())};
 };
 
 export default compose(

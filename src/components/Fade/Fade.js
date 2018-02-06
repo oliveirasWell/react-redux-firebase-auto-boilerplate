@@ -6,7 +6,6 @@ const duration = 500;
 const defaultStyle = {
     transition: `opacity ${duration}ms ease-in-out`,
     opacity: 0,
-    padding: 20,
 };
 
 const transitionStyles = {

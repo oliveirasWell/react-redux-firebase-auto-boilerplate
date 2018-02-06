@@ -7,13 +7,16 @@ const styles = {
     }
 };
 
-export const TableLine = ({dados, index}) => {
+export const TableLine = ({dados, index, style, isHeader}) => {
 
     const keys = Object.keys(dados);
+    const styleOfLine = !!style ? {...styles.td, ...style} : styles.td;
+    const Header = isHeader ? 'th' : 'td';
+    const itemOfTableLine = keys.map((key, index) => <Header style={styleOfLine} key={index}> {dados[key]} </Header>);
 
     return (
         <tr key={index}>
-            {keys.map((key, index) => <td style={styles.td} key={index}> {dados[key]} </td>)}
+            {itemOfTableLine}
         </tr>
     );
 
