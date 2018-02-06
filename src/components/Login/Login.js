@@ -7,6 +7,7 @@ import PropTypes from "prop-types";
 import {compose} from "recompose";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
+import {firebaseAuth, googleProvider} from "../../utils/firebase";
 
 const styles = {
     container: {
@@ -48,6 +49,19 @@ class Login extends Component {
 
     };
 
+    googleLogin = event => {
+        event.preventDefault();
+
+        firebaseAuth.signInWithPopup(googleProvider)
+            .then(r => {
+                console.log(r);
+                this.props.history.push("/");
+            })
+            .catch(error => {
+                console.log(error.message);
+            });
+    };
+
     componentWillMount() {
         this.setState({clickedLogin: false});
         if (this.props.userAuth !== null) {
@@ -76,6 +90,11 @@ class Login extends Component {
                         {this.state.clickedLogin && <FontAwesome name='bolt' spin/>}
                     </div>
                     <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
+
+                    <button style={styles.input} onClick={this.googleLogin}
+                            className={'circularButton'}>
+                        google login
+                    </button>
                 </form>
             </Fade>
         );
