@@ -12,10 +12,6 @@ import {nodes} from "../../utils/dataBaseNodes";
 
 const styles = {
     container: {
-        margin: '2em',
-        borderRadius: 4,
-        borderWidth: 0.5,
-        borderColor: '#ddd',
         fontFamily: 'sans-serif',
     },
 };

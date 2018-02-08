@@ -3,6 +3,8 @@ import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {staticLinks} from "../../utils/staticLinks";
+import FontAwesome from 'react-fontawesome';
 
 const styles = {
     divAlert: {
@@ -19,7 +21,8 @@ const styles = {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between'
-    }
+    },
+    a: {marginRight: '5px', color: '#333'}
 };
 
 class Header extends React.Component {
@@ -31,19 +34,37 @@ class Header extends React.Component {
 
     render = () => {
         return <Fade in={this.state.in}>
-            {this.props.msg != null && <Fade in={this.props.msg != null && this.props.msg !== ''}>
-                <div style={styles.divAlert}>{this.props.msg}</div>
-            </Fade>}
+            {
+                this.props.msg != null &&
+                <Fade in={this.props.msg != null && this.props.msg !== ''}>
+                    <div style={styles.divAlert}>{this.props.msg}</div>
+                </Fade>
+            }
+
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+                alignSelf: 'flex-end',
+                marginBottom: '20px'
+            }}>
+                <a style={styles.a} href={staticLinks.github}><FontAwesome name='github'/></a>
+                {/*<a style={styles.a} href={staticLinks.instagram}><FontAwesome name='instagram'/></a>*/}
+                {/*<a style={styles.a} href={staticLinks.linkedin}><FontAwesome name='linkedin'/></a>*/}
+                {/*<a style={styles.a} href={staticLinks.webSite}><FontAwesome name='mouse-pointer'/></a>*/}
+            </div>
+
             <div style={styles.divFlex}>
-                <div style={{...styles.div, float: 'left'}}>
+                <div style={{...styles.div, ...styles.divFlex, float: 'left'}}>
+
                     <span style={{fontWeight: 900, color: '#000000'}}>React</span><span
-                    style={{fontWeight: 900, color: '#2f2f2f'}}>Redux</span><span
-                    style={{fontWeight: 900, color: '#484848'}}>Firebase</span>
+                    style={{fontWeight: 800, color: '#2f2f2f'}}>Redux</span><span
+                    style={{fontWeight: 700, color: '#484848'}}>Firebase</span>
                     Example
                 </div>
                 <div style={{...styles.div, float: 'right'}}>
-                {!!this.props.userAuth &&
-                <span>{this.props.userAuth.displayName} <Logout/></span>}
+                    {!!this.props.userAuth &&
+                    <span>{this.props.userAuth.displayName} <Logout/></span>}
                 </div>
             </div>
         </Fade>
