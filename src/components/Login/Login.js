@@ -13,10 +13,11 @@ const styles = {
     container: {
         position: 'flex',
         margin: '2em',
+        width: '50%',
     },
     input: {
         marginBottom: '5px',
-        width: '60%',
+        width: '100%',
         display: 'block'
     },
 };

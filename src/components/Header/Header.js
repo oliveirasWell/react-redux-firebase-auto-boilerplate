@@ -20,7 +20,8 @@ const styles = {
     divFlex: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        minHeight: '33px'
     },
     a: {marginRight: '5px', color: '#333'}
 };
@@ -56,11 +57,10 @@ class Header extends React.Component {
 
             <div style={styles.divFlex}>
                 <div style={{...styles.div, ...styles.divFlex, float: 'left'}}>
-
-                    <span style={{fontWeight: 900, color: '#000000'}}>React</span><span
-                    style={{fontWeight: 800, color: '#2f2f2f'}}>Redux</span><span
-                    style={{fontWeight: 700, color: '#484848'}}>Firebase</span>
-                    Example
+                    <span style={{fontWeight: 900, color: '#000000'}}>React</span>
+                    <span style={{fontWeight: 800, color: '#2f2f2f'}}>Redux</span>
+                    <span style={{fontWeight: 700, color: '#484848'}}>Firebase</span>
+                    <span> Example</span>
                 </div>
                 <div style={{...styles.div, float: 'right'}}>
                     {!!this.props.userAuth &&
