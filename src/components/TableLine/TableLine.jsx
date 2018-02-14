@@ -7,12 +7,15 @@ const styles = {
     }
 };
 
-export const TableLine = ({dados, index, style, isHeader}) => {
+export const TableLine = ({dados, keys, index, style, isHeader}) => {
 
-    const keys = Object.keys(dados);
     const styleOfLine = !!style ? {...styles.td, ...style} : styles.td;
     const Header = isHeader ? 'th' : 'td';
-    const itemOfTableLine = keys.map((key, index) => <Header style={styleOfLine} key={index}> {dados[key]} </Header>);
+    const itemOfTableLine = keys.map((key, index) => {
+            return !(dados[key] instanceof Array || dados[key] instanceof Object) &&
+                <Header style={styleOfLine} key={index}> {dados[key]} </Header>
+        }
+    );
 
     return (
         <tr key={index}>

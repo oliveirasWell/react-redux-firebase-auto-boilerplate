@@ -1,21 +1,31 @@
 import {firebaseAuth, firebaseDatabase} from '../utils/firebase'
-import {nodes} from "../utils/dataBaseNodes";
 
 export class FirebaseService {
-    static getAllDataBy = (rootNode, callback, size) => {
-        firebaseDatabase.ref(rootNode)
-            .limitToLast(size)
-            .orderByChild(nodes.client)
-            .on('value', dataSnapshot => {
-                let items = [];
+    static getAllDataBy = (rootNode, callback, size = 10, flatMap, orderByChild) => {
+        let query = orderByChild != null
+            ? firebaseDatabase.ref(rootNode.key).limitToLast(size).orderByChild(orderByChild.key)
+            : firebaseDatabase.ref(rootNode.key).limitToLast(size);
 
-                dataSnapshot.forEach(childSnapshot => {
-                    let item = childSnapshot.val();
-                    items.push(item);
-                });
+        query.on('value', dataSnapshot => {
+            let items = [];
 
-                callback(items);
+            dataSnapshot.forEach(childSnapshot => {
+                let item = childSnapshot.val();
+
+                const flatMapItem = flatMap(item);
+
+                //TODO: flatMap only works with an array of arrays
+                if (flatMapItem instanceof Array) {
+                    flatMap(item).forEach(itemInput => {
+                        items.push(itemInput);
+                    });
+                } else {
+                    items.push(flatMapItem);
+                }
             });
+
+            callback(items);
+        });
     };
 
     static login = (email, password) => {

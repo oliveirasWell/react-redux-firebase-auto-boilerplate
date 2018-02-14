@@ -1,12 +1,12 @@
 import firebase from 'firebase';
 
 const config = {
-    apiKey: "AIzaSyDcwu_FqqT64JhZ3O6PR5KcqCjaYL1V18E",
-    authDomain: "esp8266-teste.firebaseapp.com",
-    databaseURL: "https://esp8266-teste.firebaseio.com",
-    projectId: "esp8266-teste",
-    storageBucket: "esp8266-teste.appspot.com",
-    messagingSenderId: "846578518307"
+    apiKey: "AIzaSyAJw3Ob1LTJpJyFBQ84e8m71e-nhXrs6L8",
+    authDomain: "bep-homolog.firebaseapp.com",
+    databaseURL: "https://bep-homolog.firebaseio.com",
+    projectId: "bep-homolog",
+    storageBucket: "bep-homolog.appspot.com",
+    messagingSenderId: "277693523048"
 };
 
 export const firebaseImpl = firebase.initializeApp(config);

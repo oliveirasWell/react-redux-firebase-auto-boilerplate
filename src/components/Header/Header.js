@@ -27,7 +27,7 @@ const styles = {
 };
 
 class Header extends React.Component {
-    state = {in: false, msg: '', userAuth: null};
+    state = {in: false};
 
     componentDidMount = () => {
         this.setState({in: true});

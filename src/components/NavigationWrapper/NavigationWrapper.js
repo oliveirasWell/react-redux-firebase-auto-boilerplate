@@ -1,7 +1,7 @@
 import React from 'react';
-import Login from "../Login/Login";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
+import {ifNotLoggedGoToLogin} from "../../utils/session";
 
 class NavigationWrapper extends React.Component {
     constructor(props) {
@@ -10,12 +10,7 @@ class NavigationWrapper extends React.Component {
     }
 
     render() {
-        return <div>
-            {this.props.userAuth != null && this.props.userAuth !== undefined
-                ? <this.Component {...this.props} />
-                : <Login {...this.props}/>
-            }
-        </div>
+        return ifNotLoggedGoToLogin(this.context.store, this.Component);
     }
 }
 

@@ -1,13 +1,12 @@
 import React, {Component} from "react";
 import {withRouter} from "react-router-dom";
 import {FirebaseService} from "../../services/FirebaseService";
-import Fade from "../Fade/Fade";
 import {globalError} from "../../actions/actionCreator";
 import PropTypes from "prop-types";
-import {compose} from "recompose";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
 import {firebaseAuth, googleProvider} from "../../utils/firebase";
+import {ifLoggedGoToHome} from "../../utils/session";
 
 const styles = {
     container: {
@@ -26,8 +25,7 @@ class Login extends Component {
 
     state = {
         clickedLogin: false,
-        in: false,
-        userAuth: null
+        in: false
     };
 
     login = event => {
@@ -65,40 +63,39 @@ class Login extends Component {
 
     componentWillMount() {
         this.setState({clickedLogin: false});
-        if (this.props.userAuth !== null) {
-            this.props.history.push("/")
-        }
     }
 
-    componentDidMount = () => this.setState({in: true});
+    componentDidMount = () => {
+        this.setState({in: true});
+    };
+
 
     render() {
-        return (
-            <Fade in={this.state.in}>
-                <form onSubmit={this.login} style={styles.container}>
-                    <label>email</label>
-                    <br/>
-                    <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
-                           ref={input => this.email = input}/>
-                    <br/>
-                    <label>password</label>
-                    <br/>
-                    <input className={'circularInput'} required={true} style={styles.input} type="password"
-                           ref={input => this.password = input}/>
-                    <br/>
-                    <br/>
-                    <div>
-                        {this.state.clickedLogin && <FontAwesome name='bolt' spin/>}
-                    </div>
-                    <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
+        const loginForm = <form onSubmit={this.login} style={styles.container}>
+            <label>email</label>
+            <br/>
+            <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
+                   ref={input => this.email = input}/>
+            <br/>
+            <label>password</label>
+            <br/>
+            <input className={'circularInput'} required={true} style={styles.input} type="password"
+                   ref={input => this.password = input}/>
+            <br/>
+            <br/>
+            <div>
+                {this.state.clickedLogin && <FontAwesome name='bolt' spin/>}
+            </div>
+            <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
 
-                    <button style={styles.input} onClick={this.googleLogin}
-                            className={'circularButton'}>
-                        google login
-                    </button>
-                </form>
-            </Fade>
-        );
+            <button style={styles.input} onClick={this.googleLogin}
+                    className={'circularButton'}>
+                google login
+            </button>
+        </form>;
+
+
+        return ifLoggedGoToHome(this.context.store, loginForm);
     }
 }
 
@@ -117,7 +114,6 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default compose(
-    withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
-)(Login);
+export default withRouter(
+    connect(mapStateToProps, mapDispatchToProps)(Login)
+);

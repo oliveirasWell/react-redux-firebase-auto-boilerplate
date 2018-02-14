@@ -2,8 +2,10 @@ import React from "react";
 import {TableLine} from "../TableLine/TableLine";
 import Fade from "../Fade/Fade";
 import FontAwesome from 'react-fontawesome';
+import PropTypes from "prop-types";
+import {withRouter} from "react-router-dom";
 
-export default class FirebaseGenericTable extends React.Component {
+class FirebaseGenericTable extends React.Component {
 
     state = {
         tittle: '',
@@ -28,14 +30,21 @@ export default class FirebaseGenericTable extends React.Component {
         const keys = firstItem !== undefined ? Object.keys(firstItem) : [];
 
         const dadosKeys = {};
-        keys.forEach((key) => dadosKeys[key] = key);
+        keys.forEach((key) => {
+            if (!(firstItem[key] instanceof Array || firstItem[key] instanceof Object)) {
+                dadosKeys[key] = key;
+            }
+        });
+
+        const keysToPrint = Object.keys(dadosKeys);
 
         const dataList = this.state.dataList
             .map((leitura, index) =>
-                <TableLine dados={leitura} index={index} key={index} isHeader={false}/>
+                <TableLine dados={leitura} index={index} key={index} isHeader={false} keys={keysToPrint}/>
             );
 
-        const header = <TableLine dados={dadosKeys} isHeader={true} style={{textTransform: 'capitalize'}}/>;
+        const header = <TableLine keys={keysToPrint} dados={dadosKeys} isHeader={true}
+                                  style={{textTransform: 'capitalize'}}/>;
 
         return {dataList, header};
     };
@@ -79,3 +88,9 @@ export default class FirebaseGenericTable extends React.Component {
         );
     }
 }
+
+FirebaseGenericTable.contextTypes = {
+    store: PropTypes.object.isRequired,
+};
+
+export default withRouter(FirebaseGenericTable);
