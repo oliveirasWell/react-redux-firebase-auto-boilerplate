@@ -9,8 +9,8 @@ import {firebaseAuth, googleProvider} from "../../utils/firebase";
 const styles = {
     container: {
         position: 'flex',
-        margin: '2em',
-        width: '50%',
+        margin: '0 auto',
+        width: '40%',
     },
     input: {
         marginBottom: '5px',
@@ -63,27 +63,30 @@ class Login extends Component {
     };
 
     render() {
-        return <form onSubmit={this.login} style={styles.container}>
-            <label>email</label>
-            <br/>
-            <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
-                   ref={input => this.email = input}/>
-            <br/>
-            <label>password</label>
-            <br/>
-            <input className={'circularInput'} required={true} style={styles.input} type="password"
-                   ref={input => this.password = input}/>
-            <br/>
-            <div style={{textAlign: 'center', marginBottom: '5px'}}>
-                {this.state.clickedLogin && <div><FontAwesome name='bolt' spin/></div>}
-            </div>
-            <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
+        return <div className={'center'}>
+            <form onSubmit={this.login} style={styles.container}>
+                <label>email</label>
+                <br/>
+                <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
+                       ref={input => this.email = input}/>
+                <br/>
+                <label>password</label>
+                <br/>
+                <input className={'circularInput'} required={true} style={styles.input} type="password"
+                       ref={input => this.password = input}/>
+                <br/>
 
-            <button style={styles.input} onClick={this.googleLogin}
-                    className={'circularButton'}>
-                google login
-            </button>
-        </form>;
+                <div style={{textAlign: 'center', marginBottom: '5px'}}>
+                    &nbsp; {this.state.clickedLogin && <FontAwesome name='bolt' spin/>}
+                </div>
+                <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
+
+                <button style={styles.input} onClick={this.googleLogin}
+                        className={'circularButton'}>
+                    google login
+                </button>
+            </form>
+        </div>;
     }
 }
 
