@@ -12,7 +12,8 @@ import {routes} from "../../utils/routes";
 import Welcome from "../Welcome/Welcome";
 import {NoMatch} from "../NoMatch/NoMatch";
 import Login from "../Login/Login";
-import FirebaseGenericTable from "../FirebaseGenericTable/FirebaseGenericTable";
+import NavigationLoggedWrapper from "../NavigationWrapper/NavigationLoggedWrapper";
+import DataTable from "../DataTable/DataTable";
 
 const styles = {
     container: {
@@ -55,14 +56,8 @@ class App extends React.Component {
     }
 
     render() {
-        const propsTable = {
-            ...this.props,
-            dataList: this.state.data,
-            title: this.state.node ? this.state.node.name : null,
-        };
-
         const propsNav = {
-            ...propsTable,
+            dataList: this.state.data,
         };
 
         const nodesList = Object.values(nodes);
@@ -81,13 +76,21 @@ class App extends React.Component {
                 </nav>
 
                 <Switch>
-                    <Route exact path={routes.login} render={() => <Login {...propsNav}/>}/>
-                    <Route exact path={routes.data}
-                           render={() => <NavigationWrapper {...propsNav} component={FirebaseGenericTable}/>}/>
+                    <Route exact path={routes.login}
+                           render={() => <NavigationLoggedWrapper component={Login} propsToInput={propsNav}/>}/>
+
                     <Route exact path={routes.welcome}
-                           render={() => <NavigationWrapper {...propsNav} component={Welcome}/>}/>
-                    <Redirect from="/" to="/welcome"/>
-                    <Route component={NoMatch}/>
+                           render={() => <NavigationWrapper component={Welcome} propsToInput={propsNav}/>}/>
+
+                    <Route exact path={routes.data}
+                           render={() => <NavigationWrapper component={DataTable} propsToInput={propsNav}/>}/>
+
+                    <Route exact path={routes.users}
+                           render={() => <NavigationWrapper component={DataTable} propsToInput={propsNav}/>}/>
+
+                    <Redirect exact from="/" to={routes.welcome}/>
+
+                    <Route exact component={NoMatch}/>
                 </Switch>
             </div>
         );

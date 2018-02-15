@@ -1,12 +1,15 @@
 import React from "react";
+import Fade from "../Fade/Fade";
 
 export const NoMatch = ({location}) => (
-    <div>
-        <h3>
-            404 :'(
-        </h3>
-        <span>
-            No match for <code>{location.pathname}</code>
+    <Fade in={true}>
+        <React.Fragment>
+            <h3>
+                404 :'(
+            </h3>
+            <span>
+            Not Found <code>{location.pathname}</code>
         </span>
-    </div>
+        </React.Fragment>
+    </Fade>
 );

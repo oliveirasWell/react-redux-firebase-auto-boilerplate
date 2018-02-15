@@ -1,14 +1,15 @@
 import React from "react";
 import {Redirect} from "react-router-dom";
+import {routes} from "./routes";
 
-export const ifNotLoggedGoToLogin = (store, Component) => {
-    return store.getState().userAuth != null
-        ? <Component/>
-        : <Redirect to={'/login'}/>
+export const ifNotLoggedGoToLogin = (userAuth, Component, props) => {
+    return userAuth != null
+        ? <Component {...props}/>
+        : <Redirect to={routes.login}/>
 };
 
-export const ifLoggedGoToHome = (store, Component) => {
-    return store.getState().userAuth == null
-        ? <Component/>
-        : <Redirect to={'/welcome'}/>
+export const ifLoggedGoToHome = (userAuth, Component, props) => {
+    return userAuth != null
+        ? <Redirect to={routes.welcome}/>
+        : <Component {...props}/>
 };

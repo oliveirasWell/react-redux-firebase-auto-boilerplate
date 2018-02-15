@@ -4,5 +4,9 @@ export function msgReducer(state = null, action) {
         return action.msg;
     }
 
+    if (action.type === 'CLEAR') {
+        return '';
+    }
+
     return state;
 }

@@ -1,7 +1,6 @@
 import {routes, routesToPrint} from '../../utils/routes';
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
-import PropTypes from "prop-types";
+import {Link} from "react-router-dom";
 
 class Welcome extends React.Component {
     render() {
@@ -22,9 +21,4 @@ class Welcome extends React.Component {
 
 }
 
-
-Welcome.contextTypes = {
-    store: PropTypes.object.isRequired,
-};
-
-export default withRouter(Welcome);
+export default Welcome;
