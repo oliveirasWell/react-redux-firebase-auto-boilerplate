@@ -4,6 +4,7 @@ const styles = {
     td: {
         paddingLeft: '10px',
         paddingRight: '10px',
+        textAlign: 'center',
     }
 };
 
