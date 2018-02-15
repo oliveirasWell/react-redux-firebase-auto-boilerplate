@@ -4,8 +4,8 @@ import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {ifLoggedGoToHome} from "../../utils/session";
 
-const NavigationLoggedWrapper = ({userAuth, component, propsToInput}) => {
-    return ifLoggedGoToHome(userAuth, component, propsToInput);
+const NavigationLoggedWrapper = ({userAuth, component, ...otherProps}) => {
+    return ifLoggedGoToHome(userAuth, component, otherProps);
 };
 
 NavigationLoggedWrapper.contextTypes = {
