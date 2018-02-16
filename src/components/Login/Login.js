@@ -4,7 +4,7 @@ import {FirebaseService} from "../../services/FirebaseService";
 import {addGlobalError, clearGlobalMessages} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
-import {firebaseAuth, googleProvider} from "../../utils/firebase";
+import {facebookProvider, firebaseAuth, googleProvider} from "../../utils/firebase";
 import {routes as nodes} from "../../utils/routes";
 
 
@@ -51,12 +51,31 @@ class Login extends Component {
                 this.setState({clickedLogin: false});
             });
     };
+
     googleLogin = event => {
         event.preventDefault();
         this.setState({clickedLogin: true});
         this.props.cleanMessages();
 
         firebaseAuth.signInWithPopup(googleProvider)
+            .then(r => {
+                console.log(r);
+                this.props.cleanMessages();
+                this.props.history.push(nodes.root);
+                this.setState({clickedLogin: false});
+            })
+            .catch(error => {
+                this.props.sendError(error.message);
+                this.setState({clickedLogin: false});
+            });
+    };
+
+    facebookLogin = event => {
+        event.preventDefault();
+        this.setState({clickedLogin: true});
+        this.props.cleanMessages();
+
+        firebaseAuth.signInWithPopup(facebookProvider)
             .then(r => {
                 console.log(r);
                 this.props.cleanMessages();
@@ -95,6 +114,11 @@ class Login extends Component {
                 <button style={styles.input} onClick={this.googleLogin}
                         className={'circularButton'}>
                     google login
+                </button>
+
+                <button style={styles.input} onClick={this.facebookLogin}
+                        className={'circularButton'}>
+                    facebook login
                 </button>
             </form>
         </div>;
