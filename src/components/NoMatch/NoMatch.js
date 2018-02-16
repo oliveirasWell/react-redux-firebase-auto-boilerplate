@@ -4,9 +4,9 @@ import Fade from "../Fade/Fade";
 export const NoMatch = ({location}) => (
     <Fade in={true}>
         <React.Fragment>
-            <h3>
+            <h1>
                 404 :'(
-            </h3>
+            </h1>
             <span>
             Not Found <code>{location.pathname}</code>
         </span>

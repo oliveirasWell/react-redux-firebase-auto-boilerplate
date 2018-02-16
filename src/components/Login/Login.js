@@ -5,6 +5,8 @@ import {addGlobalError, clearGlobalMessages} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
 import {firebaseAuth, googleProvider} from "../../utils/firebase";
+import {routes as nodes} from "../../utils/routes";
+
 
 const styles = {
     container: {
@@ -16,6 +18,10 @@ const styles = {
         marginBottom: '5px',
         width: '100%',
         display: 'block'
+    },
+    divFontAwesome: {
+        textAlign: 'center',
+        marginBottom: '5px'
     },
 };
 
@@ -36,7 +42,7 @@ class Login extends Component {
         FirebaseService.login(email, password)
             .then(() => {
                 this.props.cleanMessages();
-                this.props.history.push("/");
+                this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
             })
             .catch(error => {
@@ -44,7 +50,6 @@ class Login extends Component {
                 this.setState({clickedLogin: false});
             });
     };
-
     googleLogin = event => {
         event.preventDefault();
         this.setState({clickedLogin: true});
@@ -53,13 +58,17 @@ class Login extends Component {
             .then(r => {
                 console.log(r);
                 this.props.cleanMessages();
-                this.props.history.push("/");
+                this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
             })
             .catch(error => {
-                console.log(error.message);
+                this.props.sendError(error.message);
                 this.setState({clickedLogin: false});
             });
+    };
+
+    componentDidMount() {
+        this.props.cleanMessages();
     };
 
     render() {
@@ -76,7 +85,7 @@ class Login extends Component {
                        ref={input => this.password = input}/>
                 <br/>
 
-                <div style={{textAlign: 'center', marginBottom: '5px'}}>
+                <div style={styles.divFontAwesome}>
                     &nbsp; {this.state.clickedLogin && <FontAwesome name='bolt' spin/>}
                 </div>
                 <input style={styles.input} type="submit" value="login" className={'circularButton'}/>

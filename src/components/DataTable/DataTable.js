@@ -1,4 +1,3 @@
-import FirebaseGenericTable from "../FirebaseGenericTable/FirebaseGenericTable";
 import {TableLine} from "../TableLine/TableLine";
 import Fade from "../Fade/Fade";
 import FontAwesome from 'react-fontawesome';
@@ -7,7 +6,14 @@ import React from "react";
 import {nodes} from "../../utils/dataBaseNodes";
 import {FirebaseService} from "../../services/FirebaseService";
 
-class DataTable extends FirebaseGenericTable {
+const styles = {
+    header: {textTransform: 'capitalize'},
+    link: {marginRight: '5px'},
+    divFontAwesome: {margin: '0 auto', textAlign: 'center'}
+};
+
+
+class DataTable extends React.Component {
 
     state = {
         tittle: '',
@@ -28,10 +34,6 @@ class DataTable extends FirebaseGenericTable {
         this.redirectAndRender(nodes[this.props.match.params.node]);
     };
 
-
-    componentDidMount = () => {
-        this.setState({in: true})
-    };
 
     extractTableInfo = () => {
         if (this.state.dataList == null || this.state.dataList === undefined) {
@@ -55,10 +57,15 @@ class DataTable extends FirebaseGenericTable {
                 <TableLine dados={leitura} index={index} key={index} isHeader={false} keys={keysToPrint}/>
             );
 
+
         const header = <TableLine keys={keysToPrint} dados={dadosKeys} isHeader={true}
-                                  style={{textTransform: 'capitalize'}}/>;
+                                  style={styles.header}/>;
 
         return {dataList, header};
+    };
+
+    componentDidMount() {
+        this.setState({in: true})
     };
 
     redirectAndRender(node) {
@@ -78,7 +85,7 @@ class DataTable extends FirebaseGenericTable {
                 nodesList.map((node, key) => {
                     const styleOfTab = node.key === this.state.activeTab ? {fontWeight: 900} : {fontWeight: 100};
                     return node.path && <a key={key} onClick={() => this.redirectAndRender(node)}
-                                           style={{...styleOfTab, marginRight: '5px'}}>{node.name}</a>
+                                           style={{...styles.link, ...styleOfTab}}>{node.name}</a>
                 })
             }
         </nav>;
@@ -88,7 +95,7 @@ class DataTable extends FirebaseGenericTable {
                 <Fade in={true}>
                     <React.Fragment>
                         {nav}
-                        <div style={{margin: '0 auto', textAlign: 'center'}}><FontAwesome name='bolt' spin size="5x"/>
+                        <div style={styles.divFontAwesome}><FontAwesome name='bolt' spin size="5x"/>
                         </div>
                     </React.Fragment>
                 </Fade>

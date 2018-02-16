@@ -3,23 +3,22 @@ import {withRouter} from "react-router-dom";
 import {logout} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import {compose} from "recompose";
+import {routes as nodes} from "../../utils/routes";
 
 class Logout extends Component {
 
     click = () => {
-        this.props.logoutOfFirebase();
-        this.props.history.push('/login');
+        this.props.logout();
+        this.props.history.push(nodes.login);
     };
 
     render() {
-        return (
-            <button className={'circularButton'} onClick={this.click}>logout</button>
-        );
+        return <button className={'circularButton'} onClick={this.click}>logout</button>;
     }
 }
 
 const mapDispatchToProps = dispatch => {
-    return {logoutOfFirebase: () => dispatch(logout())};
+    return {logout: () => dispatch(logout())};
 };
 
 export default compose(

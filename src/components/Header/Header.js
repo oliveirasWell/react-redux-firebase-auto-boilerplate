@@ -3,7 +3,7 @@ import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
 import PropTypes from "prop-types";
 import {connect} from "react-redux";
-import {staticLinks} from "../../utils/staticLinks";
+import {socialLinks} from "../../utils/staticLinks";
 import FontAwesome from 'react-fontawesome';
 import {routes} from "../../utils/routes";
 import {Link} from "react-router-dom";
@@ -25,17 +25,48 @@ const styles = {
         justifyContent: 'space-between',
         minHeight: '33px'
     },
-    a: {marginRight: '5px', color: '#333'}
+    a: {
+        marginRight: '5px', color: '#333'
+    },
+    socialLinks: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        alignSelf: 'flex-end',
+        marginBottom: '20px'
+    },
+    divTittle: {
+        float: 'left'
+    },
+    link: {
+        textDecoration: 'none'
+    },
+    blackBoldTittle: {
+        fontWeight: 900, color: '#000000'
+    },
+    darkGreyBoldTittle: {
+        fontWeight: 800, color: '#2f2f2f'
+    },
+    darkGreyTittle: {
+        fontWeight: 700, color: '#484848'
+    },
+    darkGreyLightTittle: {
+        fontWeight: 100, color: '#484848'
+    },
+    userName: {
+        float: 'right'
+    }
+
 };
 
 class Header extends React.Component {
     state = {in: false};
 
-    componentDidMount = () => {
+    componentDidMount() {
         this.setState({in: true});
     };
 
-    render = () => {
+    render() {
         return <Fade in={this.state.in}>
             <div className={'center'}>
                 {
@@ -45,31 +76,21 @@ class Header extends React.Component {
                     </Fade>
                 }
 
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-evenly',
-                    alignSelf: 'flex-end',
-                    marginBottom: '20px'
-                }}>
-                    <a style={styles.a} href={staticLinks.github}><FontAwesome name='github'/></a>
-                    {/*<a style={styles.a} href={staticLinks.instagram}><FontAwesome name='instagram'/></a>*/}
-                    {/*<a style={styles.a} href={staticLinks.linkedin}><FontAwesome name='linkedin'/></a>*/}
-                    {/*<a style={styles.a} href={staticLinks.webSite}><FontAwesome name='mouse-pointer'/></a>*/}
+                <div style={styles.socialLinks}>
+                    <a style={styles.a} href={socialLinks.github}><FontAwesome name='github'/></a>
                 </div>
 
                 <div style={styles.divFlex}>
-                    <div style={{...styles.div, ...styles.divFlex, float: 'left'}}>
-                        <Link to={routes.root} style={{textDecoration: 'none'}}>
-                            <span style={{fontWeight: 900, color: '#000000'}}>React</span>
-                            <span style={{fontWeight: 800, color: '#2f2f2f'}}>Redux</span>
-                            <span style={{fontWeight: 700, color: '#484848'}}>Firebase</span>
-                            <span style={{fontWeight: 100, color: '#484848'}}> Example</span>
+                    <div style={{...styles.divTittle, ...styles.div, ...styles.divFlex}}>
+                        <Link to={routes.root} style={styles.link}>
+                            <span style={styles.blackBoldTittle}>React</span>
+                            <span style={styles.darkGreyBoldTittle}>Redux</span>
+                            <span style={styles.darkGreyTittle}>Firebase</span>
+                            <span style={styles.darkGreyLightTittle}> Example</span>
                         </Link>
                     </div>
-                    <div style={{...styles.div, float: 'right'}}>
-                        {!!this.props.userAuth &&
-                        <span>{this.props.userAuth.displayName} <Logout/></span>}
+                    <div style={{...styles.div, ...styles.userName}}>
+                        {!!this.props.userAuth && <span>{this.props.userAuth.displayName} <Logout/></span>}
                     </div>
                 </div>
             </div>

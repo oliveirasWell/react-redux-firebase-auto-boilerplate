@@ -35,10 +35,9 @@ class App extends React.Component {
         return (
             <div style={styles.container}>
                 <Header/>
-
                 <Switch>
                     <Route exact path={routes.login}
-                           render={(props) => <NavigationLoggedWrapper component={Login}       {...props}/>}/>
+                           render={(props) => <NavigationLoggedWrapper component={Login} {...props}/>}/>
 
                     <Route exact path={routes.welcome}
                            render={(props) => <NavigationWrapper component={Welcome}     {...props}/>}/>
