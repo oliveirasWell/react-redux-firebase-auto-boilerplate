@@ -1,14 +1,13 @@
 import {TableLine} from "../TableLine/TableLine";
 import Fade from "../Fade/Fade";
 import FontAwesome from 'react-fontawesome';
-import PropTypes from "prop-types";
 import React from "react";
 import {nodes} from "../../utils/dataBaseNodes";
 import {FirebaseService} from "../../services/FirebaseService";
 
 const styles = {
     header: {textTransform: 'capitalize'},
-    link: {marginRight: '5px'},
+    link: {marginRight: '5px', textTransform: 'capitalize'},
     divFontAwesome: {margin: '0 auto', textAlign: 'center'}
 };
 
@@ -130,9 +129,5 @@ class DataTable extends React.Component {
     }
 
 }
-
-DataTable.contextTypes = {
-    store: PropTypes.object.isRequired,
-};
 
 export default DataTable;

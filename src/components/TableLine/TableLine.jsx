@@ -19,7 +19,7 @@ export const TableLine = ({dados, keys, index, style, isHeader}) => {
     );
 
     return (
-        <tr key={index}>
+        <tr key={index} className={isHeader ? "header" : ""}>
             {itemOfTableLine}
         </tr>
     );

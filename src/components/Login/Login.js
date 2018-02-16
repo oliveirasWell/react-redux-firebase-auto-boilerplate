@@ -34,8 +34,9 @@ class Login extends Component {
 
     login = event => {
         event.preventDefault();
-
         this.setState({clickedLogin: true});
+        this.props.cleanMessages();
+
         const email = this.email.value;
         const password = this.password.value;
 
@@ -53,6 +54,7 @@ class Login extends Component {
     googleLogin = event => {
         event.preventDefault();
         this.setState({clickedLogin: true});
+        this.props.cleanMessages();
 
         firebaseAuth.signInWithPopup(googleProvider)
             .then(r => {

@@ -1,7 +1,6 @@
 import React from 'react';
 import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
-import PropTypes from "prop-types";
 import {connect} from "react-redux";
 import {socialLinks} from "../../utils/staticLinks";
 import FontAwesome from 'react-fontawesome';
@@ -11,9 +10,17 @@ import {Link} from "react-router-dom";
 const styles = {
     divAlert: {
         textAlign: 'center',
-        color: '#b94424',
+        color: '#ffffff',
         fontWeight: '500',
-        textTransform: 'uppercase'
+        position: 'absolute',
+        up: '10px',
+        right: '10px',
+        borderRadius: '290486px',
+        background: '#0e0e0e',
+        fontSize: '0.7em',
+        padding: '1em 2em',
+        transition: 'background 200ms ease-in-out',
+
     },
     div: {
         maxWidth: '50%',
@@ -42,16 +49,20 @@ const styles = {
         textDecoration: 'none'
     },
     blackBoldTittle: {
-        fontWeight: 900, color: '#000000'
+        fontWeight: 900,
+        color: '#000000'
     },
     darkGreyBoldTittle: {
-        fontWeight: 800, color: '#2f2f2f'
+        fontWeight: 800,
+        color: '#2f2f2f'
     },
     darkGreyTittle: {
-        fontWeight: 700, color: '#484848'
+        fontWeight: 700,
+        color: '#484848'
     },
     darkGreyLightTittle: {
-        fontWeight: 100, color: '#484848'
+        fontWeight: 100,
+        color: '#484848'
     },
     userName: {
         float: 'right'
@@ -72,7 +83,7 @@ class Header extends React.Component {
                 {
                     this.props.msg != null &&
                     <Fade in={this.props.msg != null && this.props.msg !== ''}>
-                        <div style={styles.divAlert}>{this.props.msg}</div>
+                        <div style={styles.divAlert}><FontAwesome name='exclamation-triangle'/> {this.props.msg}</div>
                     </Fade>
                 }
 
@@ -86,7 +97,7 @@ class Header extends React.Component {
                             <span style={styles.blackBoldTittle}>React</span>
                             <span style={styles.darkGreyBoldTittle}>Redux</span>
                             <span style={styles.darkGreyTittle}>Firebase</span>
-                            <span style={styles.darkGreyLightTittle}> Example</span>
+                            <span style={styles.darkGreyLightTittle}>Example</span>
                         </Link>
                     </div>
                     <div style={{...styles.div, ...styles.userName}}>
@@ -97,10 +108,6 @@ class Header extends React.Component {
         </Fade>
     };
 }
-
-Header.contextTypes = {
-    store: PropTypes.object.isRequired,
-};
 
 const mapStateToProps = state => {
     return {
