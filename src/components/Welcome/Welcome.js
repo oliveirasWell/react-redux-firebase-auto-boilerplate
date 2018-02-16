@@ -8,8 +8,8 @@ class Welcome extends React.Component {
     render() {
 
         const linksList = Object.keys(links)
-            .map(key => routesToPrint.includes(key)
-                ? <Link className="welcome-link" to={links[key]} style={styles.link}>{key}</Link>
+            .map((key, index) => routesToPrint.includes(key)
+                ? <Link key={index} className="welcome-link" to={links[key]} style={styles.link}>{key}</Link>
                 : null
             );
 

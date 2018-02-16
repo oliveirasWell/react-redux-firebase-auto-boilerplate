@@ -1,4 +1,4 @@
-import {firebaseAuth, firebaseDatabase} from '../utils/firebase'
+import {facebookProvider, firebaseAuth, firebaseDatabase, googleProvider} from '../utils/firebase'
 
 export class FirebaseService {
     static getAllDataBy = (rootNode, callback, size = 10, flatMap, orderByChild) => {
@@ -34,5 +34,24 @@ export class FirebaseService {
 
     static logout = () => {
         return firebaseAuth.signOut();
+    };
+
+    static onAuthChange = (callbackLogin, callbackLogout) => {
+        firebaseAuth.onAuthStateChanged(authUser => {
+            if (!authUser) {
+                callbackLogout(authUser);
+            } else {
+                callbackLogin(authUser);
+            }
+        });
+
+    };
+
+    static loginWithFacebook = () => {
+        return firebaseAuth.signInWithPopup(facebookProvider);
+    };
+
+    static loginWithGoogle = () => {
+        return firebaseAuth.signInWithPopup(googleProvider);
     }
 }

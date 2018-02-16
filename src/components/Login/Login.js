@@ -4,8 +4,8 @@ import {FirebaseService} from "../../services/FirebaseService";
 import {addGlobalError, clearGlobalMessages} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
-import {facebookProvider, firebaseAuth, googleProvider} from "../../utils/firebase";
 import {routes as nodes} from "../../utils/routes";
+import {compose} from "recompose";
 
 
 const styles = {
@@ -57,9 +57,8 @@ class Login extends Component {
         this.setState({clickedLogin: true});
         this.props.cleanMessages();
 
-        firebaseAuth.signInWithPopup(googleProvider)
+        FirebaseService.loginWithGoogle()
             .then(r => {
-                console.log(r);
                 this.props.cleanMessages();
                 this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
@@ -75,7 +74,7 @@ class Login extends Component {
         this.setState({clickedLogin: true});
         this.props.cleanMessages();
 
-        firebaseAuth.signInWithPopup(facebookProvider)
+        FirebaseService.loginWithFacebook()
             .then(r => {
                 console.log(r);
                 this.props.cleanMessages();
@@ -93,6 +92,9 @@ class Login extends Component {
     };
 
     render() {
+        const showFacebookLogin = process.env.REACT_APP_FACEBOOK_LOGIN_ENABLE === 'true';
+        const showGoogleLogin = process.env.REACT_APP_GOOGLE_LOGIN_ENABLE === 'true';
+
         return <div className={'center'}>
             <form onSubmit={this.login} style={styles.container}>
                 <label>email</label>
@@ -111,15 +113,20 @@ class Login extends Component {
                 </div>
                 <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
 
-                <button style={styles.input} onClick={this.googleLogin}
-                        className={'circularButton'}>
-                    google login
-                </button>
+                {
+                    showGoogleLogin &&
+                    <button style={styles.input} onClick={this.googleLogin}
+                            className={'circularButton'}>
+                        google login
+                    </button>
+                }
 
-                <button style={styles.input} onClick={this.facebookLogin}
-                        className={'circularButton'}>
-                    facebook login
-                </button>
+                {
+                    showFacebookLogin &&
+                    <button style={styles.input} onClick={this.facebookLogin} className={'circularButton'}>
+                        facebook login
+                    </button>
+                }
             </form>
         </div>;
     }
@@ -137,6 +144,7 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(
-    connect(mapStateToProps, mapDispatchToProps)(Login)
-);
+export default compose(
+    withRouter,
+    connect(mapStateToProps, mapDispatchToProps)
+)(Login);

@@ -1,7 +1,6 @@
 import React from 'react';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
 import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
-import {firebaseAuth} from "../../utils/firebase";
 import Header from "../Header/Header";
 import {login, logout} from "../../actions/actionCreator";
 import {connect} from "react-redux";
@@ -12,6 +11,7 @@ import Login from "../Login/Login";
 import NavigationLoggedWrapper from "../NavigationWrapper/NavigationLoggedWrapper";
 import DataTable from "../DataTable/DataTable";
 import {compose} from "recompose";
+import {FirebaseService} from "../../services/FirebaseService";
 
 const styles = {
     container: {
@@ -22,13 +22,10 @@ const styles = {
 class App extends React.Component {
 
     componentDidMount() {
-        firebaseAuth.onAuthStateChanged(authUser => {
-            if (authUser) {
-                this.props.login(authUser);
-            } else {
-                this.props.logout();
-            }
-        });
+        FirebaseService.onAuthChange(
+            (authUser) => this.props.login(authUser),
+            () => this.props.logout()
+        );
     };
 
     render() {
