@@ -27,7 +27,6 @@ const styles = {
     }
 };
 
-
 class DataTable extends React.Component {
 
     state = {
@@ -57,6 +56,7 @@ class DataTable extends React.Component {
 
         return {dataList, header};
     };
+
     updateNode = (node) => {
 
         if (node === null || node === undefined) {
@@ -137,7 +137,6 @@ class DataTable extends React.Component {
             </TableWrapper>
         );
     }
-
 }
 
 export default DataTable;

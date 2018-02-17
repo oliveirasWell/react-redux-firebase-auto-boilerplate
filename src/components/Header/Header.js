@@ -113,11 +113,13 @@ class Header extends React.Component {
                             <span style={styles.darkGreyLightTittle}>Example</span>
                         </Link>
                     </div>
-                    {!!this.props.userAuth &&
-                    <div style={{...styles.div, ...styles.userName, ...styles.divFlex}}>
-                        {!!this.props.userAuth.photoURL && <img src={this.props.userAuth.photoURL} style={styles.image}/>}
-                        <Logout/>
-                    </div>
+
+                    {
+                        !!this.props.userAuth &&
+                        <div style={{...styles.div, ...styles.userName, ...styles.divFlex}}>
+                            {!!this.props.userAuth.photoURL && <img src={this.props.userAuth.photoURL} style={styles.image}/>}
+                            <Logout/>
+                        </div>
                     }
                 </div>
             </div>

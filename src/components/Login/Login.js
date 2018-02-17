@@ -29,8 +29,7 @@ class Login extends Component {
 
     login = event => {
         event.preventDefault();
-        this.setState({clickedLogin: true});
-        this.props.cleanMessages();
+        this.loginDefaultActions();
 
         const email = this.email.value;
         const password = this.password.value;
@@ -45,11 +44,9 @@ class Login extends Component {
                 this.setState({clickedLogin: false});
             });
     };
-
     googleLogin = event => {
         event.preventDefault();
-        this.setState({clickedLogin: true});
-        this.props.cleanMessages();
+        this.loginDefaultActions();
 
         FirebaseService.loginWithGoogle()
             .then(r => {
@@ -61,15 +58,12 @@ class Login extends Component {
                 this.setState({clickedLogin: false});
             });
     };
-
     facebookLogin = event => {
         event.preventDefault();
-        this.setState({clickedLogin: true});
-        this.props.cleanMessages();
+        this.loginDefaultActions();
 
         FirebaseService.loginWithFacebook()
             .then(r => {
-                console.log(r);
                 this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
             })
@@ -82,6 +76,11 @@ class Login extends Component {
     componentDidMount() {
         this.props.cleanMessages();
     };
+
+    loginDefaultActions() {
+        this.setState({clickedLogin: true});
+        this.props.cleanMessages();
+    }
 
     render() {
         const showFacebookLogin = process.env.REACT_APP_FACEBOOK_LOGIN_ENABLE === 'true';
