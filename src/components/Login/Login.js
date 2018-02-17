@@ -7,6 +7,7 @@ import FontAwesome from 'react-fontawesome';
 import {routes} from "../../utils/routes";
 import {compose} from "recompose";
 import './Login.css';
+import {facebookLoginEnabled, googleLoginEnabled} from "../../utils/env";
 
 const styles = {
     a: {
@@ -77,8 +78,7 @@ class Login extends Component {
     }
 
     render() {
-        const showFacebookLogin = process.env.REACT_APP_FACEBOOK_LOGIN_ENABLE === 'true';
-        const showGoogleLogin = process.env.REACT_APP_GOOGLE_LOGIN_ENABLE === 'true';
+
 
         return <div className={'center'}>
             <form onSubmit={this.login} className='container'>
@@ -101,7 +101,7 @@ class Login extends Component {
                 <input style={styles.input} type="submit" value="login" className={'circularButton'}/>
 
                 {
-                    showGoogleLogin &&
+                    googleLoginEnabled &&
                     <button style={styles.input} onClick={this.googleLogin}
                             className={'circularButton'}>
                         google login
@@ -109,7 +109,7 @@ class Login extends Component {
                 }
 
                 {
-                    showFacebookLogin &&
+                    facebookLoginEnabled &&
                     <button style={styles.input} onClick={this.facebookLogin} className={'circularButton'}>
                         facebook login
                     </button>

@@ -1,26 +1,52 @@
 import React from "react";
+import FontAwesome from 'react-fontawesome';
 
 const styles = {
     td: {
         paddingLeft: '10px',
         paddingRight: '10px',
         textAlign: 'center',
+    },
+    marginRight: {
+        marginRight: '15px',
+        marginLeft: '15px'
+    },
+    actions: {
+        display: 'flex',
+        cursor: 'pointer',
     }
 };
 
-export const TableLine = ({dados, keys, index, style, isHeader}) => {
+export const TableLine = ({dados, keys, index, style, isHeader, removeMethod, editMethod}) => {
+    const styleOfLine = {...(!!style ? {...styles.td, ...style} : styles.td)};
+    const LineTipeComponent = isHeader ? 'th' : 'td';
 
-    const styleOfLine = !!style ? {...styles.td, ...style} : styles.td;
-    const Header = isHeader ? 'th' : 'td';
-    const itemOfTableLine = keys.map((key, index) => {
-            return !(dados[key] instanceof Array || dados[key] instanceof Object) &&
-                <Header style={styleOfLine} key={index}> {dados[key]} </Header>
+    const actions = (keyOfItem) => <div style={{...(!isHeader ? styles.actions : null)}}>
+        <div style={styles.marginRight} onClick={() => removeMethod(keyOfItem)}>
+            <FontAwesome name='trash'/> Remove
+        </div>
+        <div style={styles.marginRight} onClick={() => editMethod(keyOfItem)}>
+            <FontAwesome name='pencil'/> Edit
+        </div>
+    </div>;
+
+    const lineContent = (key) => {
+        if (key !== 'actions') {
+            return dados[key];
+        } else if (isHeader) {
+            return 'actions';
+        } else {
+            return actions(dados['.key']);
         }
-    );
+    };
 
     return (
-        <tr key={index} className={isHeader ? "header" : ""}>
-            {itemOfTableLine}
+        <tr key={!!dados['.key'] ? dados['.key'] : index} className={isHeader ? "header" : ""}>
+            {
+                [...keys, 'actions']
+                    .filter(key => !(dados[key] instanceof Array || dados[key] instanceof Object))
+                    .map((key, index) => <LineTipeComponent style={styleOfLine} key={index}> {lineContent(key)}</LineTipeComponent>)
+            }
         </tr>
     );
 

@@ -5,6 +5,8 @@ import React from "react";
 import {nodes} from "../../utils/dataBaseNodes";
 import {FirebaseService} from "../../services/FirebaseService";
 import {links} from "../../utils/routes";
+import {addGlobalError} from "../../actions/actionCreator";
+import {connect} from "react-redux";
 
 const styles = {
     header: {
@@ -37,6 +39,7 @@ class DataTable extends React.Component {
         in: false,
     };
 
+
     extractTableInfo = () => {
         if (this.state.dataList == null || this.state.dataList === undefined) {
             return {dataList: null, header: null}
@@ -51,11 +54,34 @@ class DataTable extends React.Component {
             }, {});
 
         const header = <TableLine keys={keys} dados={dadosKeys} isHeader={true} style={styles.header}/>;
-        const dataList = this.state.dataList
-            .map((leitura, index) => <TableLine dados={leitura} index={index} key={index} isHeader={false} keys={keys}/>);
+        const dataList = this.state.dataList.map((leitura, index) =>
+            <TableLine dados={leitura}
+                       index={index}
+                       key={index}
+                       isHeader={false}
+                       keys={keys}
+                       removeMethod={(id) => this.removeNode(id)}
+                       editMethod={(id) => this.editNode(id)}
+            />);
 
         return {dataList, header};
     };
+    removeNode = (id) => {
+        FirebaseService.remove(id, this.state.node, (message) => this.props.addMessage(message));
+    };
+    editNode = (id) => {
+        this.props.history.push(`${this.state.node.pathToEdit}/${id}`);
+    };
+
+    componentWillMount() {
+        this.setState({tittle: this.props.tittle});
+        this.updateNode(nodes[this.props.match.params.node]);
+    };
+
+    componentDidMount() {
+        this.setState({in: true})
+    };
+
     updateNode = (node) => {
         if (node === null || node === undefined) {
             this.props.history.push('/data/');
@@ -73,16 +99,6 @@ class DataTable extends React.Component {
 
         FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
     };
-
-    componentWillMount() {
-        this.setState({tittle: this.props.tittle});
-        this.updateNode(nodes[this.props.match.params.node]);
-    };
-
-    componentDidMount() {
-        this.setState({in: true})
-    };
-
 
     render() {
         const TableWrapper = (props) => {
@@ -138,4 +154,10 @@ class DataTable extends React.Component {
     }
 }
 
-export default DataTable;
+const mapDispatchToProps = dispatch => {
+    return {
+        addMessage: message => dispatch(addGlobalError(message)),
+    };
+};
+
+export default connect(null, mapDispatchToProps)(DataTable);

@@ -13,7 +13,6 @@ export class FirebaseService {
 
             dataSnapshot.forEach(childSnapshot => {
                 let item = childSnapshot.val();
-
                 const flatMapItem = flatMap(item);
 
                 //TODO: flatMap only works with an array of arrays
@@ -22,6 +21,7 @@ export class FirebaseService {
                         items.push(itemInput);
                     });
                 } else {
+                    item['.key'] = childSnapshot.key;
                     items.push(flatMapItem);
                 }
             });
@@ -96,6 +96,14 @@ export class FirebaseService {
                 console.log(error);
                 addMessage(error.message);
                 redirect(routes.newUser);
+            });
+    };
+
+
+    static remove = (id, node, addMessage) => {
+        return firebaseDatabase.ref(node.key + '/' + id)
+            .remove((error) => {
+                addMessage(!!error ? error.message : `The ${node.name} with id ${id} was removed successfully`)
             });
     };
 }

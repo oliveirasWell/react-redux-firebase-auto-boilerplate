@@ -20,6 +20,7 @@ export const nodes = {
         path: routes.leitura,
         flat: c => c,
         orderByChild: null,
+        pathToEdit: '/edit/leitura/',
         keys: ["cliente", "data", "temperatura", "umidade"]
     },
     users: {
@@ -28,6 +29,7 @@ export const nodes = {
         path: routes.users,
         flat: c => c,
         orderByChild: null,
+        pathToEdit: '/edit/users/',
         keys: ["displayName", "email"]
     }
 };
