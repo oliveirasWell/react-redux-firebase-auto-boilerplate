@@ -12,3 +12,4 @@ You can find the most recent version of this guide [here](https://github.com/fac
 -  feature branch using material-ui
 -  select what node to show at dataTable
 -  extract wrappers to HOC
+-  keep a record of user is active
