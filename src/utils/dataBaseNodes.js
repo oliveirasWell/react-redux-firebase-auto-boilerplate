@@ -14,6 +14,18 @@ const flatMap = c => {
 };
 
 export const nodes = {
-    data: {name: 'Data', key: 'data', path: routes.data, flat: c => flatMap(c)},
-    users: {name: 'Users', key: 'users', path: routes.users, flat: c => c}
+    data: {
+        name: 'Data',
+        key: 'data',
+        path: routes.data,
+        flat: c => flatMap(c),
+        keys: ["UV", "animal", "animalName", "datetime", "deviceAddress", "freqHeart", "freqRespiratory", "humidity", "light", "shadowing", "temperature", "temperatureIButton"]
+    },
+    users: {
+        name: 'Users',
+        key: 'users',
+        path: routes.users,
+        flat: c => c,
+        keys: ["displayName", "permission", "photoUrl", "uid"]
+    }
 };

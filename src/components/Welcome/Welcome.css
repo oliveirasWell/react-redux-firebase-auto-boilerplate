@@ -1,0 +1,10 @@
+
+.welcome-link:hover {
+    color: #000000;
+    transition: color 500ms ease-in-out;
+}
+
+.welcome-link {
+    color: #566b78;
+    transition: color 500ms ease-in-out;
+}

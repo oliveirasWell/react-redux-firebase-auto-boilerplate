@@ -1,6 +1,7 @@
 import {links, routesToPrint} from '../../utils/routes';
 import React from "react";
 import {Link} from "react-router-dom";
+import './Welcome.css';
 
 const styles = {link: {display: 'flex', textDecoration: 'none'}};
 

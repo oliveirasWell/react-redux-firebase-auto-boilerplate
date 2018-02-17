@@ -12,12 +12,8 @@ import NavigationLoggedWrapper from "../NavigationWrapper/NavigationLoggedWrappe
 import DataTable from "../DataTable/DataTable";
 import {compose} from "recompose";
 import {FirebaseService} from "../../services/FirebaseService";
+import {Footer} from "../Footer/Footer";
 
-const styles = {
-    container: {
-        fontFamily: 'sans-serif',
-    },
-};
 
 class App extends React.Component {
 
@@ -30,7 +26,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div style={styles.container}>
+            <React.Fragment>
                 <Header/>
                 <Switch>
                     <Route exact path={routes.login}
@@ -49,7 +45,8 @@ class App extends React.Component {
 
                     <Route render={(props) => <NavigationWrapper component={NoMatch}   {...props}/>}/>
                 </Switch>
-            </div>
+                <Footer/>
+            </React.Fragment>
         );
     };
 }

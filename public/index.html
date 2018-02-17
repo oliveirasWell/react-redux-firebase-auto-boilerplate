@@ -24,18 +24,19 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
 
     <style>
-        @import 'https://fonts.googleapis.com/css?family=Roboto:100,300,400,500';
+        @import 'https://fonts.googleapis.com/css?family=Roboto:100,200,300,400,500';
 
         body {
             font-family: "Roboto", "Helvetica", "Arial", sans-serif;
         }
 
         body {
-            /*margin: 0 auto;*/
-            /*max-width: 50em;*/
-            /*padding: 4em 1em;*/
             line-height: 1.5;
             color: #566b78;
+            padding-top: 6rem;
+            padding-bottom: 6rem;
+            display: flex;
+            flex-direction: column;
         }
 
         h2 {
@@ -53,9 +54,39 @@
             outline-width: 0;
         }
 
+        th, td {
+            border: 0;
+            padding: 15px;
+        }
+
+        tr:hover {
+            background-color: #fbfbfb;
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        footer {
+            position: fixed;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            padding: 1rem;
+            background-color: #ffffff;
+            text-align: center;
+        }
+
+        .fixed-top {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #ffffff;
+        }
+
         .center {
             margin: 0 auto;
-            max-width: 60em;
             padding: 1em;
         }
 
@@ -76,41 +107,13 @@
             padding: 1em 2em;
             text-decoration: none;
             transition: background 200ms ease-in-out;
+            cursor: pointer;
         }
 
         .circularButton:hover {
             background: #333;
             color: #d1d1d1;
             border: 1px solid #333;
-        }
-
-        .welcome-link:hover {
-            color: #000000;
-            transition: color 500ms ease-in-out;
-        }
-
-        .welcome-link {
-            color: #878787;
-            transition: color 500ms ease-in-out;
-        }
-
-        hr {
-            border: 0;
-            height: 1px;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
-        }
-
-        th, td {
-            border: 0;
-            padding: 15px;
-        }
-
-        tr:hover {
-            background-color: #fbfbfb;
-        }
-
-        table {
-            border-spacing: 0;
         }
 
     </style>

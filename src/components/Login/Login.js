@@ -6,14 +6,9 @@ import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
 import {routes as nodes} from "../../utils/routes";
 import {compose} from "recompose";
-
+import './Login.css';
 
 const styles = {
-    container: {
-        position: 'flex',
-        margin: '0 auto',
-        width: '40%',
-    },
     input: {
         marginBottom: '5px',
         width: '100%',
@@ -42,7 +37,6 @@ class Login extends Component {
 
         FirebaseService.login(email, password)
             .then(() => {
-                this.props.cleanMessages();
                 this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
             })
@@ -59,7 +53,6 @@ class Login extends Component {
 
         FirebaseService.loginWithGoogle()
             .then(r => {
-                this.props.cleanMessages();
                 this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
             })
@@ -77,7 +70,6 @@ class Login extends Component {
         FirebaseService.loginWithFacebook()
             .then(r => {
                 console.log(r);
-                this.props.cleanMessages();
                 this.props.history.push(nodes.root);
                 this.setState({clickedLogin: false});
             })
@@ -96,7 +88,7 @@ class Login extends Component {
         const showGoogleLogin = process.env.REACT_APP_GOOGLE_LOGIN_ENABLE === 'true';
 
         return <div className={'center'}>
-            <form onSubmit={this.login} style={styles.container}>
+            <form onSubmit={this.login} className='container'>
                 <label>email</label>
                 <br/>
                 <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"

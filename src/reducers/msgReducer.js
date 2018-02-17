@@ -5,7 +5,7 @@ export function msgReducer(state = null, action) {
     }
 
     if (action.type === 'CLEAR') {
-        return '';
+        return null;
     }
 
     return state;

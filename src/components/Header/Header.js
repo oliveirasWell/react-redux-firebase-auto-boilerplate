@@ -2,19 +2,24 @@ import React from 'react';
 import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
 import {connect} from "react-redux";
-import {socialLinks} from "../../utils/staticLinks";
 import FontAwesome from 'react-fontawesome';
 import {routes} from "../../utils/routes";
 import {Link} from "react-router-dom";
+import {clearGlobalMessages} from "../../actions/actionCreator";
 
 const styles = {
+
+    divAlertParent: {
+        position: 'absolute',
+        left: '50%',
+    },
     divAlert: {
         textAlign: 'center',
         color: '#ffffff',
         fontWeight: '500',
-        position: 'absolute',
-        up: '10px',
-        right: '10px',
+        position: 'relative',
+        top: '10px',
+        left: '-50%',
         borderRadius: '290486px',
         background: '#0e0e0e',
         fontSize: '0.7em',
@@ -32,42 +37,48 @@ const styles = {
         justifyContent: 'space-between',
         minHeight: '33px'
     },
-    a: {
-        marginRight: '5px', color: '#333'
-    },
-    socialLinks: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        alignSelf: 'flex-end',
-        marginBottom: '20px'
-    },
     divTittle: {
         float: 'left'
     },
     link: {
-        textDecoration: 'none'
+        textDecoration: 'none',
+        color: '#566b78'
     },
     blackBoldTittle: {
-        fontWeight: 900,
-        color: '#000000'
+        fontWeight: 600,
     },
     darkGreyBoldTittle: {
-        fontWeight: 800,
-        color: '#2f2f2f'
+        fontWeight: 500,
     },
     darkGreyTittle: {
-        fontWeight: 700,
-        color: '#484848'
+        fontWeight: 400,
     },
     darkGreyLightTittle: {
-        fontWeight: 100,
-        color: '#484848'
+        fontWeight: 200,
     },
     userName: {
-        float: 'right'
+        float: 'right',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        alignSelf: 'flex-end',
+    },
+    close: {
+        position: 'relative',
+        top: '-5px',
+        left: '5px',
+        color: '#acacac',
+        cursor: 'pointer'
+    },
+    image: {
+        width: '32px',
+        height: '32px',
+        borderRadius: '50%',
+        backgroundPosition: 'center',
+        backgroundSize: '100% auto',
+        backgroundRepeat: 'no-repeat',
+        margin: '0 5px 5px',
     }
-
 };
 
 class Header extends React.Component {
@@ -79,17 +90,19 @@ class Header extends React.Component {
 
     render() {
         return <Fade in={this.state.in}>
-            <div className={'center'}>
+            <div className={'center fixed-top'}>
                 {
-                    this.props.msg != null &&
-                    <Fade in={this.props.msg != null && this.props.msg !== ''}>
-                        <div style={styles.divAlert}><FontAwesome name='exclamation-triangle'/> {this.props.msg}</div>
+                    this.props.msg != null && this.props.msg !== '' &&
+                    <Fade in={this.props.msg != null && this.props.msg !== ''} out={this.props.msg == null}>
+                        <div style={styles.divAlertParent}>
+                            <div style={styles.divAlert}>
+                                <FontAwesome name='exclamation-triangle'/> {this.props.msg}
+
+                                <a style={styles.close} onClick={this.props.cleanMessages}>x</a>
+                            </div>
+                        </div>
                     </Fade>
                 }
-
-                <div style={styles.socialLinks}>
-                    <a style={styles.a} href={socialLinks.github}><FontAwesome name='github'/></a>
-                </div>
 
                 <div style={styles.divFlex}>
                     <div style={{...styles.divTittle, ...styles.div, ...styles.divFlex}}>
@@ -100,9 +113,12 @@ class Header extends React.Component {
                             <span style={styles.darkGreyLightTittle}>Example</span>
                         </Link>
                     </div>
-                    <div style={{...styles.div, ...styles.userName}}>
-                        {!!this.props.userAuth && <span>{this.props.userAuth.displayName} <Logout/></span>}
+                    {!!this.props.userAuth &&
+                    <div style={{...styles.div, ...styles.userName, ...styles.divFlex}}>
+                        {!!this.props.userAuth.photoURL && <img src={this.props.userAuth.photoURL} style={styles.image}/>}
+                        <Logout/>
                     </div>
+                    }
                 </div>
             </div>
         </Fade>
@@ -116,4 +132,10 @@ const mapStateToProps = state => {
     }
 };
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = dispatch => {
+    return {
+        cleanMessages: () => dispatch(clearGlobalMessages())
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
