@@ -14,6 +14,7 @@ import {compose} from "recompose";
 import {FirebaseService} from "../../services/FirebaseService";
 import {Footer} from "../Footer/Footer";
 import NewUser from "../NewUser/NewUser";
+import FirebaseNodeElement from "../FirebaseNodeElement/FirebaseNodeElement";
 
 
 class App extends React.Component {
@@ -41,6 +42,9 @@ class App extends React.Component {
 
                     <Route exact path={routes.data}
                            render={(props) => <NavigationWrapper component={DataTable}   {...props}/>}/>
+
+                    <Route exact path={routes.edit}
+                           render={(props) => <NavigationWrapper component={FirebaseNodeElement}   {...props}/>}/>
 
                     <Redirect exact from={routes.root} to={routes.welcome}/>
 

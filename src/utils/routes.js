@@ -3,6 +3,7 @@ export const routes = {
     login: '/login',
     newUser: '/newUser',
     data: '/data/:node',
+    edit: '/edit/:node/:id',
     leitura: '/data/:node',
     welcome: '/welcome',
     users: '/data/:node',

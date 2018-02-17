@@ -57,11 +57,15 @@ export class FirebaseService {
         return firebaseAuth.signInWithPopup(googleProvider);
     };
 
-    static writeData = (id, name, email, node) => {
-        firebaseDatabase.ref(node.key + '/' + id).set({
+    static writeDataUser = (id, name, email, node) => {
+        return firebaseDatabase.ref(node.key + '/' + id).set({
             displayName: name,
             email: email
         });
+    };
+
+    static writeData = (id, obj, node) => {
+        return firebaseDatabase.ref(node.key + '/' + id).set({...obj});
     };
 
     static createUser = (email, password) => {
@@ -73,7 +77,7 @@ export class FirebaseService {
         return FirebaseService.createUser(email, password)
             .then(user => {
                 const displayName = !!user ? user.displayName : name;
-                FirebaseService.writeData(user.uid, displayName, user.email, nodes.users);
+                FirebaseService.writeDataUser(user.uid, displayName, user.email, nodes.users);
                 addMessage(`The user ${user.email} has been successfully created.`)
                 redirect(routes.welcome)
             })
@@ -88,7 +92,7 @@ export class FirebaseService {
         return FirebaseService.loginWithGoogle()
             .then(response => {
                 let user = response.user;
-                FirebaseService.writeData(user.uid, user.displayName, user.email, nodes.users);
+                FirebaseService.writeDataUser(user.uid, user.displayName, user.email, nodes.users);
                 addMessage(`The user ${response.email} has been successfully created.`)
                 redirect(routes.welcome)
             })
@@ -106,4 +110,8 @@ export class FirebaseService {
                 addMessage(!!error ? error.message : `The ${node.name} with id ${id} was removed successfully`)
             });
     };
+
+    static getUniqueDataBy = (node, callback) => {
+        return callback({displayName: 'Teste', email: 'test', id: 'asdasdqwe12dasdasd'});
+    }
 }
