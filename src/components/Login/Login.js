@@ -1,14 +1,17 @@
 import React, {Component} from "react";
-import {withRouter} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import {FirebaseService} from "../../services/FirebaseService";
 import {addGlobalError, clearGlobalMessages} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
-import {routes as nodes} from "../../utils/routes";
+import {routes} from "../../utils/routes";
 import {compose} from "recompose";
 import './Login.css';
 
 const styles = {
+    a: {
+        textDecoration: 'none',
+    },
     input: {
         marginBottom: '5px',
         width: '100%',
@@ -36,27 +39,18 @@ class Login extends Component {
 
         FirebaseService.login(email, password)
             .then(() => {
-                this.props.history.push(nodes.root);
+                this.props.history.push(routes.root);
                 this.setState({clickedLogin: false});
             })
             .catch(error => {
-                this.props.sendError(error.message);
+                this.props.addMessage(error.message);
                 this.setState({clickedLogin: false});
             });
     };
     googleLogin = event => {
         event.preventDefault();
         this.loginDefaultActions();
-
-        FirebaseService.loginWithGoogle()
-            .then(r => {
-                this.props.history.push(nodes.root);
-                this.setState({clickedLogin: false});
-            })
-            .catch(error => {
-                this.props.sendError(error.message);
-                this.setState({clickedLogin: false});
-            });
+        FirebaseService.createUserByGoogleAndAddToDataBase((message) => this.props.addMessage(message), (key) => this.props.history.push(key));
     };
     facebookLogin = event => {
         event.preventDefault();
@@ -64,11 +58,11 @@ class Login extends Component {
 
         FirebaseService.loginWithFacebook()
             .then(r => {
-                this.props.history.push(nodes.root);
+                this.props.history.push(routes.root);
                 this.setState({clickedLogin: false});
             })
             .catch(error => {
-                this.props.sendError(error.message);
+                this.props.addMessage(error.message);
                 this.setState({clickedLogin: false});
             });
     };
@@ -88,6 +82,8 @@ class Login extends Component {
 
         return <div className={'center'}>
             <form onSubmit={this.login} className='container'>
+                <h1>Login</h1>
+
                 <label>email</label>
                 <br/>
                 <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
@@ -118,24 +114,26 @@ class Login extends Component {
                         facebook login
                     </button>
                 }
+
+                <Link to={routes.newUser} style={styles.a}>
+                    <button style={{...styles.input}} className={'circularButton'}>
+                        new user
+                    </button>
+                </Link>
             </form>
         </div>;
     }
 }
 
 
-const mapStateToProps = state => {
-    return {userAuth: state.userAuth};
-};
-
 const mapDispatchToProps = dispatch => {
     return {
-        sendError: message => dispatch(addGlobalError(message)),
+        addMessage: message => dispatch(addGlobalError(message)),
         cleanMessages: () => dispatch(clearGlobalMessages())
     };
 };
 
 export default compose(
     withRouter,
-    connect(mapStateToProps, mapDispatchToProps)
+    connect(null, mapDispatchToProps)
 )(Login);

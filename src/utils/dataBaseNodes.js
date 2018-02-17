@@ -1,6 +1,6 @@
 import {routes} from "./routes";
 
-
+// eslint-disable-next-line
 const flatMap = c => {
     if (c == null || c === undefined) {
         return [];
@@ -14,18 +14,20 @@ const flatMap = c => {
 };
 
 export const nodes = {
-    data: {
+    leitura: {
         name: 'Data',
-        key: 'data',
-        path: routes.data,
-        flat: c => flatMap(c),
-        keys: ["UV", "animal", "animalName", "datetime", "deviceAddress", "freqHeart", "freqRespiratory", "humidity", "light", "shadowing", "temperature", "temperatureIButton"]
+        key: 'leitura',
+        path: routes.leitura,
+        flat: c => c,
+        orderByChild: null,
+        keys: ["cliente", "data", "temperatura", "umidade"]
     },
     users: {
         name: 'Users',
         key: 'users',
         path: routes.users,
         flat: c => c,
-        keys: ["displayName", "permission", "photoUrl", "uid"]
+        orderByChild: null,
+        keys: ["displayName", "email"]
     }
 };

@@ -13,6 +13,7 @@ import DataTable from "../DataTable/DataTable";
 import {compose} from "recompose";
 import {FirebaseService} from "../../services/FirebaseService";
 import {Footer} from "../Footer/Footer";
+import NewUser from "../NewUser/NewUser";
 
 
 class App extends React.Component {
@@ -32,11 +33,11 @@ class App extends React.Component {
                     <Route exact path={routes.login}
                            render={(props) => <NavigationLoggedWrapper component={Login} {...props}/>}/>
 
+                    <Route exact path={routes.newUser}
+                           render={(props) => <NavigationLoggedWrapper component={NewUser} {...props}/>}/>
+
                     <Route exact path={routes.welcome}
                            render={(props) => <NavigationWrapper component={Welcome}     {...props}/>}/>
-
-                    <Route exact path={routes.data}
-                           render={(props) => <NavigationWrapper component={DataTable}   {...props}/>}/>
 
                     <Route exact path={routes.data}
                            render={(props) => <NavigationWrapper component={DataTable}   {...props}/>}/>

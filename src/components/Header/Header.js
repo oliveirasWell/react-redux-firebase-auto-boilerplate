@@ -117,7 +117,7 @@ class Header extends React.Component {
                     {
                         !!this.props.userAuth &&
                         <div style={{...styles.div, ...styles.userName, ...styles.divFlex}}>
-                            {!!this.props.userAuth.photoURL && <img src={this.props.userAuth.photoURL} style={styles.image}/>}
+                            {!!this.props.userAuth.photoURL && <img src={this.props.userAuth.photoURL} style={styles.image} alt={this.props.userAuth.displayName}/>}
                             <Logout/>
                         </div>
                     }

@@ -44,7 +44,7 @@ class DataTable extends React.Component {
 
         const keys = this.state.node.keys;
         const firstItem = this.state.dataList[0];
-        const dadosKeys = keys.filter(k => !(firstItem[k] instanceof Array || firstItem[k] instanceof Object))
+        const dadosKeys = keys.filter(k => !(firstItem !== undefined && (firstItem[k] instanceof Array || firstItem[k] instanceof Object)))
             .reduce((map, obj) => {
                 map[obj] = obj;
                 return map;
@@ -56,9 +56,7 @@ class DataTable extends React.Component {
 
         return {dataList, header};
     };
-
     updateNode = (node) => {
-
         if (node === null || node === undefined) {
             this.props.history.push('/data/');
             return;
@@ -73,7 +71,7 @@ class DataTable extends React.Component {
 
         this.props.history.replace(links[node.key]);
 
-        FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 20, c => node.flat(c), null);
+        FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
     };
 
     componentWillMount() {
@@ -84,6 +82,7 @@ class DataTable extends React.Component {
     componentDidMount() {
         this.setState({in: true})
     };
+
 
     render() {
         const TableWrapper = (props) => {

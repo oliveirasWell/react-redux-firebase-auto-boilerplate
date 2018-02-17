@@ -1,4 +1,6 @@
 import {facebookProvider, firebaseAuth, firebaseDatabase, googleProvider} from '../utils/firebase'
+import {nodes} from "../utils/dataBaseNodes";
+import {routes} from "../utils/routes";
 
 export class FirebaseService {
     static getAllDataBy = (rootNode, callback, size = 10, flatMap, orderByChild) => {
@@ -53,5 +55,47 @@ export class FirebaseService {
 
     static loginWithGoogle = () => {
         return firebaseAuth.signInWithPopup(googleProvider);
-    }
+    };
+
+    static writeData = (id, name, email, node) => {
+        firebaseDatabase.ref(node.key + '/' + id).set({
+            displayName: name,
+            email: email
+        });
+    };
+
+    static createUser = (email, password) => {
+        return firebaseAuth.createUserWithEmailAndPassword(email, password);
+    };
+
+    //TODO extract this two methods createUserAndAddToDataBase and createUserByGoogleAndAddToDataBase to only one.
+    static createUserAndAddToDataBase = (email, password, name, addMessage, redirect) => {
+        return FirebaseService.createUser(email, password)
+            .then(user => {
+                const displayName = !!user ? user.displayName : name;
+                FirebaseService.writeData(user.uid, displayName, user.email, nodes.users);
+                addMessage(`The user ${user.email} has been successfully created.`)
+                redirect(routes.welcome)
+            })
+            .catch((error) => {
+                console.log(error);
+                addMessage(error.message);
+                redirect(routes.newUser);
+            });
+    };
+
+    static createUserByGoogleAndAddToDataBase = (addMessage, redirect) => {
+        return FirebaseService.loginWithGoogle()
+            .then(response => {
+                let user = response.user;
+                FirebaseService.writeData(user.uid, user.displayName, user.email, nodes.users);
+                addMessage(`The user ${response.email} has been successfully created.`)
+                redirect(routes.welcome)
+            })
+            .catch((error) => {
+                console.log(error);
+                addMessage(error.message);
+                redirect(routes.newUser);
+            });
+    };
 }
