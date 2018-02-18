@@ -2,6 +2,7 @@ import {facebookProvider, firebaseAuth, firebaseDatabase, googleProvider} from '
 import {nodes} from "../utils/dataBaseNodes";
 import {routes} from "../utils/routes";
 
+//TODO: REMOVE THIS SHIT OF THEN CATCH FROM SERVICE
 export class FirebaseService {
     static getAllDataBy = (rootNode, callback, size = 10, flatMap, orderByChild) => {
         let query = orderByChild != null
@@ -78,13 +79,13 @@ export class FirebaseService {
             .then(user => {
                 const displayName = !!user ? user.displayName : name;
                 FirebaseService.writeDataUser(user.uid, displayName, user.email, nodes.users);
-                addMessage(`The user ${user.email} has been successfully created.`)
+                addMessage(`The user ${user.email} has been successfully created.`);
                 redirect(routes.welcome)
             })
             .catch((error) => {
                 console.log(error);
                 addMessage(error.message);
-                redirect(routes.newUser);
+                redirect(routes.welcome);
             });
     };
 
@@ -99,10 +100,9 @@ export class FirebaseService {
             .catch((error) => {
                 console.log(error);
                 addMessage(error.message);
-                redirect(routes.newUser);
+                redirect(routes.welcome);
             });
     };
-
 
     static remove = (id, node, addMessage) => {
         return firebaseDatabase.ref(node.key + '/' + id)
@@ -111,7 +111,33 @@ export class FirebaseService {
             });
     };
 
-    static getUniqueDataBy = (node, callback) => {
-        return callback({displayName: 'Teste', email: 'test', id: 'asdasdqwe12dasdasd'});
-    }
+    /*
+    * Will return null until firebase get element: BE AWARE OF THAT
+    * */
+    static getUniqueDataBy = (node, id, callback) => {
+        const ref = firebaseDatabase.ref(node.key + '/' + id);
+        let newData = {};
+        ref.once('value', (dataSnapshot) => {
+
+            if (!dataSnapshot) {
+                callback(null);
+                return;
+            }
+
+            const snap = dataSnapshot.val();
+            const keys = Object.keys(dataSnapshot.val());
+            keys.forEach((key) => {
+                newData[key] = snap[key]
+            });
+        }).then(() => {
+            callback(newData);
+        });
+    };
+
+    static pushData = (node, objToSubmit) => {
+        const ref = firebaseDatabase.ref(node.key).push();
+        const id = firebaseDatabase.ref(node.key).push().key;
+        ref.set(objToSubmit);
+        return id;
+    };
 }

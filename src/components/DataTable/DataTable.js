@@ -39,7 +39,6 @@ class DataTable extends React.Component {
         in: false,
     };
 
-
     extractTableInfo = () => {
         if (this.state.dataList == null || this.state.dataList === undefined) {
             return {dataList: null, header: null}
@@ -47,30 +46,28 @@ class DataTable extends React.Component {
 
         const keys = this.state.node.keys;
         const firstItem = this.state.dataList[0];
-        const dadosKeys = keys.filter(k => !(firstItem !== undefined && (firstItem[k] instanceof Array || firstItem[k] instanceof Object)))
+        const keyToHeader = keys.filter(k => !(firstItem !== undefined && (firstItem[k] instanceof Array || firstItem[k] instanceof Object)))
             .reduce((map, obj) => {
                 map[obj] = obj;
                 return map;
             }, {});
 
-        const header = <TableLine keys={keys} dados={dadosKeys} isHeader={true} style={styles.header}/>;
-        const dataList = this.state.dataList.map((leitura, index) =>
-            <TableLine dados={leitura}
-                       index={index}
-                       key={index}
-                       isHeader={false}
-                       keys={keys}
-                       removeMethod={(id) => this.removeNode(id)}
-                       editMethod={(id) => this.editNode(id)}
-            />);
+        const header = <TableLine keys={keys} data={keyToHeader} isHeader={true} style={styles.header}/>;
+        const dataList = this.state.dataList.map((leitura, index) => {
+            return <TableLine data={leitura}
+                              index={index}
+                              key={index}
+                              isHeader={false}
+                              keys={keys}
+                              removeMethod={(id) => this.removeNode(id)}
+                              editMethod={(id) => this.editNode(id)}
+            />
+        });
 
         return {dataList, header};
     };
-    removeNode = (id) => {
-        FirebaseService.remove(id, this.state.node, (message) => this.props.addMessage(message));
-    };
-    editNode = (id) => {
-        this.props.history.push(`${this.state.node.pathToEdit}/${id}`);
+    redirectToNew = () => {
+        this.props.history.push(this.state.node.pathToNew);
     };
 
     componentWillMount() {
@@ -78,8 +75,12 @@ class DataTable extends React.Component {
         this.updateNode(nodes[this.props.match.params.node]);
     };
 
-    componentDidMount() {
-        this.setState({in: true})
+    removeNode = (id) => {
+        FirebaseService.remove(id, this.state.node, (message) => this.props.addMessage(message));
+    };
+
+    editNode = (id) => {
+        this.props.history.push(`${this.state.node.pathToEdit}/${id}`);
     };
 
     updateNode = (node) => {
@@ -100,10 +101,14 @@ class DataTable extends React.Component {
         FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
     };
 
+    componentDidMount() {
+        this.setState({in: true})
+    };
+
     render() {
         const TableWrapper = (props) => {
             return <Fade in={this.state.in}>
-                <div style={{margin: '0 auto'}}>
+                <div className={'.center'}>
                     <nav className={'center'} style={styles.nav}>
                         {
                             Object.values(nodes).map((node, key) => {
@@ -112,6 +117,8 @@ class DataTable extends React.Component {
                                                        style={{...styles.link, ...style}}>{node.name}</a>
                             })
                         }
+
+                        <button onClick={this.redirectToNew} style={{float: 'right'}} className={'circularButton'}>Add new {this.state.node.name}</button>
                     </nav>
                 </div>
                 <Fade in={props.fade}>

@@ -17,7 +17,7 @@ const styles = {
     }
 };
 
-export const TableLine = ({dados, keys, index, style, isHeader, removeMethod, editMethod}) => {
+export const TableLine = ({data, keys, index, style, isHeader, removeMethod, editMethod}) => {
     const styleOfLine = {...(!!style ? {...styles.td, ...style} : styles.td)};
     const LineTipeComponent = isHeader ? 'th' : 'td';
 
@@ -32,19 +32,19 @@ export const TableLine = ({dados, keys, index, style, isHeader, removeMethod, ed
 
     const lineContent = (key) => {
         if (key !== 'actions') {
-            return dados[key];
+            return data[key];
         } else if (isHeader) {
             return 'actions';
         } else {
-            return actions(dados['.key']);
+            return actions(data['.key']);
         }
     };
 
     return (
-        <tr key={!!dados['.key'] ? dados['.key'] : index} className={isHeader ? "header" : ""}>
+        <tr key={!!data['.key'] ? data['.key'] : index} className={isHeader ? "header" : ""}>
             {
                 [...keys, 'actions']
-                    .filter(key => !(dados[key] instanceof Array || dados[key] instanceof Object))
+                    .filter(key => !(data[key] instanceof Array || data[key] instanceof Object))
                     .map((key, index) => <LineTipeComponent style={styleOfLine} key={index}> {lineContent(key)}</LineTipeComponent>)
             }
         </tr>

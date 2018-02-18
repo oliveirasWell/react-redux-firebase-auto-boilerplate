@@ -8,7 +8,6 @@ import {Link} from "react-router-dom";
 import {clearGlobalMessages} from "../../actions/actionCreator";
 
 const styles = {
-
     divAlertParent: {
         position: 'absolute',
         left: '50%',
@@ -117,7 +116,14 @@ class Header extends React.Component {
                     {
                         !!this.props.userAuth &&
                         <div style={{...styles.div, ...styles.userName, ...styles.divFlex}}>
-                            {!!this.props.userAuth.photoURL && <img src={this.props.userAuth.photoURL} style={styles.image} alt={this.props.userAuth.displayName}/>}
+                            {
+                                !!this.props.userAuth.photoURL &&
+                                <img src={this.props.userAuth.photoURL}
+                                     style={styles.image}
+                                     title={this.props.userAuth.displayName}
+                                     alt={this.props.userAuth.displayName}
+                                />
+                            }
                             <Logout/>
                         </div>
                     }

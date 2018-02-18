@@ -21,7 +21,9 @@ export const nodes = {
         flat: c => c,
         orderByChild: null,
         pathToEdit: '/edit/leitura',
-        keys: ["cliente", "data", "temperatura", "umidade"]
+        pathToNew: '/new/leitura',
+        keys: ["cliente", "data", "temperatura", "umidade"],
+        canAddNew: true
     },
     users: {
         name: 'Users',
@@ -30,6 +32,8 @@ export const nodes = {
         flat: c => c,
         orderByChild: null,
         pathToEdit: '/edit/users',
-        keys: ["displayName", "email"]
+        pathToNew: '/new/users',
+        keys: ["displayName", "email"],
+        canAddNew: true
     }
 };

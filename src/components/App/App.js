@@ -16,6 +16,12 @@ import {Footer} from "../Footer/Footer";
 import NewUser from "../NewUser/NewUser";
 import FirebaseNodeElement from "../FirebaseNodeElement/FirebaseNodeElement";
 
+const styles = {
+    container: {
+        paddingLeft: '3em',
+        paddingRight: '3em'
+    }
+};
 
 class App extends React.Component {
 
@@ -30,26 +36,31 @@ class App extends React.Component {
         return (
             <React.Fragment>
                 <Header/>
-                <Switch>
-                    <Route exact path={routes.login}
-                           render={(props) => <NavigationLoggedWrapper component={Login} {...props}/>}/>
+                <div style={styles.container}>
+                    <Switch>
+                        <Route exact path={routes.login}
+                               render={(props) => <NavigationLoggedWrapper component={Login} {...props}/>}/>
 
-                    <Route exact path={routes.newUser}
-                           render={(props) => <NavigationLoggedWrapper component={NewUser} {...props}/>}/>
+                        <Route exact path={routes.newUser}
+                               render={(props) => <NavigationLoggedWrapper component={NewUser} {...props}/>}/>
 
-                    <Route exact path={routes.welcome}
-                           render={(props) => <NavigationWrapper component={Welcome}     {...props}/>}/>
+                        <Route exact path={routes.welcome}
+                               render={(props) => <NavigationWrapper component={Welcome}     {...props}/>}/>
 
-                    <Route exact path={routes.data}
-                           render={(props) => <NavigationWrapper component={DataTable}   {...props}/>}/>
+                        <Route exact path={routes.data}
+                               render={(props) => <NavigationWrapper component={DataTable}   {...props}/>}/>
 
-                    <Route exact path={routes.edit}
-                           render={(props) => <NavigationWrapper component={FirebaseNodeElement}   {...props}/>}/>
+                        <Route exact path={routes.edit}
+                               render={(props) => <NavigationWrapper component={FirebaseNodeElement} {...props} isEdit/>}/>
 
-                    <Redirect exact from={routes.root} to={routes.welcome}/>
+                        <Route exact path={routes.new}
+                               render={(props) => <NavigationWrapper component={FirebaseNodeElement} {...props} isEdit={false}/>}/>
 
-                    <Route render={(props) => <NavigationWrapper component={NoMatch}   {...props}/>}/>
-                </Switch>
+                        <Redirect exact from={routes.root} to={routes.welcome}/>
+
+                        <Route render={(props) => <NavigationWrapper component={NoMatch}   {...props}/>}/>
+                    </Switch>
+                </div>
                 <Footer/>
             </React.Fragment>
         );
