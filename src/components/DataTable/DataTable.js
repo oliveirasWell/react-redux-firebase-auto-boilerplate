@@ -68,9 +68,9 @@ class DataTable extends React.Component {
 
         const keys = this.state.node.keys;
         const firstItem = this.state.dataList[0];
-        const keyToHeader = keys.filter(k => !(firstItem !== undefined && (firstItem[k] instanceof Array || firstItem[k] instanceof Object)))
+        const keyToHeader = keys.filter(k => !(firstItem !== undefined && (firstItem[k.key] instanceof Array || firstItem[k.key] instanceof Object)))
             .reduce((map, obj) => {
-                map[obj] = obj;
+                map[obj.key] = obj.key;
                 return map;
             }, {});
 

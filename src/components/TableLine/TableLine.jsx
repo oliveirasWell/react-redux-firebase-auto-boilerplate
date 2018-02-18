@@ -43,9 +43,9 @@ export const TableLine = ({data, keys, index, style, isHeader, removeMethod, edi
     return (
         <tr key={!!data['.key'] ? data['.key'] : index} className={isHeader ? "header" : ""}>
             {
-                [...keys, 'actions']
-                    .filter(key => !(data[key] instanceof Array || data[key] instanceof Object))
-                    .map((key, index) => <LineTipeComponent style={styleOfLine} key={index}> {lineContent(key)}</LineTipeComponent>)
+                [...keys, {key:'actions'}]
+                    .filter(key => !(data[key.key] instanceof Array || data[key.key] instanceof Object))
+                    .map((key, index) => <LineTipeComponent style={styleOfLine} key={index}> {lineContent(key.key)}</LineTipeComponent>)
             }
         </tr>
     );

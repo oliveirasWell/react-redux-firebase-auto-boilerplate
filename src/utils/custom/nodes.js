@@ -7,7 +7,12 @@ export const nodes = {
         pathToMainLink: '/data/leitura',
         pathToEdit: '/edit/leitura',
         pathToNew: '/new/leitura',
-        keys: ["cliente", "data", "temperatura", "umidade"],
+        keys: [
+            {name: 'Client', key: "cliente", type: 'email', required: 'true'},
+            {name: 'Date', key: "data", type: 'date', required: 'true'},
+            {name: 'Temperature', key: "temperatura", type: 'number', required: 'true'},
+            {name: 'Humidity', key: "umidade", type: 'number', required: 'true'},
+        ],
         canAddNew: true
     },
     users: {
@@ -18,7 +23,10 @@ export const nodes = {
         pathToMainLink: '/data/users',
         pathToEdit: '/edit/users',
         pathToNew: '/new/users',
-        keys: ["displayName", "email"],
+        keys: [
+            {name: 'Name', key: "displayName", type: 'text', required: 'true'},
+            {name: 'Email', key: "email", type: 'email', required: 'true'},
+        ],
         canAddNew: true
     }
 };

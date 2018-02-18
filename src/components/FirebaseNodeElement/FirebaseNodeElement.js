@@ -62,7 +62,7 @@ class FirebaseNodeElement extends React.Component {
         }
 
         const objToSubmit = node.keys.reduce((map, key) => {
-            map[key] = '';
+            map[key.key] = '';
             return map;
         }, {});
 
@@ -73,7 +73,7 @@ class FirebaseNodeElement extends React.Component {
         event.preventDefault();
 
         const objToSubmit = this.state.node.keys.reduce((map, key) => {
-            map[key] = this[key].value;
+            map[key.key] = this[key.key].value;
             return map;
         }, {});
 
@@ -123,11 +123,11 @@ class FirebaseNodeElement extends React.Component {
                         (key, index) =>
                             <React.Fragment key={index}>
                                 <br/>
-                                <label>{key}</label>
+                                <label>{key.name}</label>
                                 <br/>
-                                <input style={styles.input} id={key} type="text" defaultValue={this.state.obj[key]}
+                                <input style={styles.input} id={key.key} type={key.type} required={key.required} defaultValue={this.state.obj[key.key]}
                                        onChange={(c) => c}
-                                       ref={input => this[key] = input}/>
+                                       ref={input => this[key.key] = input}/>
                             </React.Fragment>
                     )
                 }
