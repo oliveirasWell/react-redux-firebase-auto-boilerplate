@@ -140,14 +140,20 @@ class DataTable extends React.Component {
         } else {
             const {dataList, header} = this.extractTableInfo();
 
-            fade = !!dataList && dataList.length > 0;
+            fade = (!!dataList && dataList.length > 0) || (this.state.dataList.length === 0);
             table = (
                 <table style={{margin: '0 auto'}}>
                     <thead>
                     {header}
                     </thead>
                     <tbody>
-                    {dataList}
+                    {
+                        this.state.dataList.length !== 0
+                            ? dataList
+                            : <tr>
+                                <td align="center" colSpan={this.state.node.keys.length + 1}> nothing here</td>
+                            </tr>
+                    }
                     </tbody>
                 </table>
             );
