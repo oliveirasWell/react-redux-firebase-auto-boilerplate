@@ -1,4 +1,4 @@
-# A React-Redux-Firebase Boilplate
+# A React-Redux-Firebase Automatic Boilplate
 
 A react-redux-firebase approach to create apps. Automatize crud creations of CRUDs with easy way to configure app.
 
