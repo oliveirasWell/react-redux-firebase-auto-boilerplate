@@ -64,6 +64,8 @@ What this mean:
     - `required` : Blocks input of null or blank infos.
 - `canAddNew`: Block input of new entries.
 
+The project expects you have a users node to insert users on login.
+
 ### Env configuration
 
 The project comes with this default env variables:
@@ -74,25 +76,37 @@ The project comes with this default env variables:
 
 To add new env variables, add to `.env` file, then add to `/src/utils/envHelper.js`.
 
-# Run
+## Run and Deploy and etc
+
+### Tests and CI/DC
+
+We have add a Gitlab Continuous Integration configuration file, you just need to create and firebase token and add on `.gitlab-ci.yml`s end of file.
+
+Besides, to run tests:run `yarn test` or `npm test` and enjoy jest test suit.
+
+### Run
 For the first run execute `npm install` or `yarn install`.
+
 To run, execute `npm start` or `yarn start`
 
 
-# Deploy
-Init the project in firebase using: `firebase init`
+### Deploy
+Init the project in firebase using: `firebase init` (after you login on firebase cli) and select the host and project options.
+
 Run the script `npm run deploy` or `yarn run deploy` to run the deploy in firebase hosting.
 
-#### TODOS
+## TODOS
+
+`Things I don't want to do now, but I have to do :(`
 
 - Google login creates a new user no matter he has or not acess
 - Fix table's header on top
-- Add user to firebaseAuth when created
+- Add user to firebaseAuth when created inside app
 - Feature branch using material-ui
 - Extract wrappers to HOC
 - Keep a record of user is active
 - Paginate tables
 - Make tests work
-- Separate service layer
+- Separate service layer from messages e etc
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
