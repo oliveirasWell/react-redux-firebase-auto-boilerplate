@@ -3,13 +3,13 @@ import {withRouter} from "react-router-dom";
 import {logout} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import {compose} from "recompose";
-import {routes as nodes} from "../../utils/routes";
+import {routes} from "../../utils/custom/routes";
 
 class Logout extends Component {
 
     click = () => {
         this.props.logout();
-        this.props.history.push(nodes.login);
+        this.props.history.push(routes.login);
     };
 
     render() {

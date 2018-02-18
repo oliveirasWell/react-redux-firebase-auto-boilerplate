@@ -1,14 +1,14 @@
 import React from 'react';
 import {Redirect, Route, Switch, withRouter} from 'react-router-dom';
-import NavigationWrapper from "../NavigationWrapper/NavigationWrapper";
+import NavigationWrapper from "../NavigationWrappers/NavigationWrapper";
 import Header from "../Header/Header";
 import {login, logout} from "../../actions/actionCreator";
 import {connect} from "react-redux";
-import {routes} from "../../utils/routes";
+import {routes} from "../../utils/custom/routes";
 import Welcome from "../Welcome/Welcome";
 import {NoMatch} from "../NoMatch/NoMatch";
 import Login from "../Login/Login";
-import NavigationLoggedWrapper from "../NavigationWrapper/NavigationLoggedWrapper";
+import NavigationLoggedWrapper from "../NavigationWrappers/NavigationLoggedWrapper";
 import DataTable from "../DataTable/DataTable";
 import {compose} from "recompose";
 import {FirebaseService} from "../../services/FirebaseService";

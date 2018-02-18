@@ -4,7 +4,7 @@ import {FirebaseService} from "../../services/FirebaseService";
 import {addGlobalError, clearGlobalMessages} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import {compose} from "recompose";
-import {routes} from "../../utils/routes";
+import {routes} from "../../utils/custom/routes";
 
 const styles = {
     input: {
@@ -16,16 +16,16 @@ const styles = {
 
 class NewUser extends Component {
 
+    componentWillMount() {
+        this.props.cleanMessages();
+    };
+
     newUSer = event => {
         event.preventDefault();
         const email = this.email.value;
         const password = this.password.value;
         const name = this.name.value;
         FirebaseService.createUserAndAddToDataBase(email, password, name, (message) => this.props.addMessage(message), () => this.props.history.push(routes.newUser));
-    };
-
-    componentWillMount() {
-        this.props.cleanMessages();
     };
 
     render() {
@@ -35,20 +35,19 @@ class NewUser extends Component {
 
                 <label>name</label>
                 <br/>
-                <input className={'circularInput'} required style={styles.input} id="name" type="text"
+                <input required style={styles.input} id="name" type="text"
                        ref={input => this.name = input}/>
                 <br/>
                 <label>email</label>
                 <br/>
-                <input className={'circularInput'} required style={styles.input} id="email" type="text"
+                <input required style={styles.input} id="email" type="text"
                        ref={input => this.email = input}/>
                 <br/>
                 <label>password</label>
                 <br/>
-                <input className={'circularInput'} required style={styles.input} type="password"
+                <input required style={styles.input} type="password"
                        ref={input => this.password = input}/>
                 <br/>
-
                 <input style={styles.input} type="submit" value="create" className={'circularButton'}/>
             </form>
         </div>;

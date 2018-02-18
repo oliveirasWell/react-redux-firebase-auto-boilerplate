@@ -4,10 +4,10 @@ import {FirebaseService} from "../../services/FirebaseService";
 import {addGlobalError, clearGlobalMessages} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
-import {routes} from "../../utils/routes";
+import {routes} from "../../utils/custom/routes";
 import {compose} from "recompose";
 import './Login.css';
-import {facebookLoginEnabled, googleLoginEnabled} from "../../utils/env";
+import {canCreateNewUserOutsideApp, facebookLoginEnabled, googleLoginEnabled} from "../../utils/envHelper";
 
 const styles = {
     a: {
@@ -31,6 +31,11 @@ class Login extends Component {
         in: false
     };
 
+    loginDefaultActions = () => {
+        this.setState({clickedLogin: true});
+        this.props.cleanMessages();
+    };
+
     login = event => {
         event.preventDefault();
         this.loginDefaultActions();
@@ -48,17 +53,19 @@ class Login extends Component {
                 this.setState({clickedLogin: false});
             });
     };
+
     googleLogin = event => {
         event.preventDefault();
         this.loginDefaultActions();
         FirebaseService.createUserByGoogleAndAddToDataBase((message) => this.props.addMessage(message), (key) => this.props.history.push(key));
     };
+
     facebookLogin = event => {
         event.preventDefault();
         this.loginDefaultActions();
 
         FirebaseService.loginWithFacebook()
-            .then(r => {
+            .then(() => {
                 this.props.history.push(routes.root);
                 this.setState({clickedLogin: false});
             })
@@ -72,26 +79,19 @@ class Login extends Component {
         this.props.cleanMessages();
     };
 
-    loginDefaultActions() {
-        this.setState({clickedLogin: true});
-        this.props.cleanMessages();
-    }
-
     render() {
-
-
         return <div className={'center'}>
             <form onSubmit={this.login} className='container'>
                 <h1>Login</h1>
 
                 <label>email</label>
                 <br/>
-                <input className={'circularInput'} required={true} style={styles.input} id="email" type="text"
+                <input required={true} style={styles.input} id="email" type="text"
                        ref={input => this.email = input}/>
                 <br/>
                 <label>password</label>
                 <br/>
-                <input className={'circularInput'} required={true} style={styles.input} type="password"
+                <input required={true} style={styles.input} type="password"
                        ref={input => this.password = input}/>
                 <br/>
 
@@ -115,11 +115,14 @@ class Login extends Component {
                     </button>
                 }
 
-                <Link to={routes.newUser} style={styles.a}>
-                    <button style={{...styles.input}} className={'circularButton'}>
-                        new user
-                    </button>
-                </Link>
+                {
+                    canCreateNewUserOutsideApp &&
+                    <Link to={routes.newUser} style={styles.a}>
+                        <button style={{...styles.input}} className={'circularButton'}>
+                            new user
+                        </button>
+                    </Link>
+                }
             </form>
         </div>;
     }

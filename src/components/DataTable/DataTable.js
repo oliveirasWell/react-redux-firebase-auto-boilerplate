@@ -2,9 +2,8 @@ import {TableLine} from "../TableLine/TableLine";
 import Fade from "../Fade/Fade";
 import FontAwesome from 'react-fontawesome';
 import React from "react";
-import {nodes} from "../../utils/dataBaseNodes";
+import {nodes} from "../../utils/custom/nodes";
 import {FirebaseService} from "../../services/FirebaseService";
-import {links} from "../../utils/routes";
 import {addGlobalError} from "../../actions/actionCreator";
 import {connect} from "react-redux";
 
@@ -39,6 +38,29 @@ class DataTable extends React.Component {
         in: false,
     };
 
+    updateNode = (node) => {
+        if (node === null || node === undefined) {
+            this.props.history.push('/data/');
+            return;
+        }
+
+        this.setState(() => {
+            return {
+                activeTab: node.key,
+                node: node,
+            }
+        });
+
+        this.props.history.replace(node.pathToMainLink);
+
+        FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
+    };
+
+    componentWillMount() {
+        this.setState({tittle: this.props.tittle});
+        this.updateNode(nodes[this.props.match.params.node]);
+    };
+
     extractTableInfo = () => {
         if (this.state.dataList == null || this.state.dataList === undefined) {
             return {dataList: null, header: null}
@@ -66,13 +88,9 @@ class DataTable extends React.Component {
 
         return {dataList, header};
     };
+
     redirectToNew = () => {
         this.props.history.push(this.state.node.pathToNew);
-    };
-
-    componentWillMount() {
-        this.setState({tittle: this.props.tittle});
-        this.updateNode(nodes[this.props.match.params.node]);
     };
 
     removeNode = (id) => {
@@ -81,24 +99,6 @@ class DataTable extends React.Component {
 
     editNode = (id) => {
         this.props.history.push(`${this.state.node.pathToEdit}/${id}`);
-    };
-
-    updateNode = (node) => {
-        if (node === null || node === undefined) {
-            this.props.history.push('/data/');
-            return;
-        }
-
-        this.setState(() => {
-            return {
-                activeTab: node.key,
-                node: node,
-            }
-        });
-
-        this.props.history.replace(links[node.key]);
-
-        FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
     };
 
     componentDidMount() {
@@ -113,8 +113,7 @@ class DataTable extends React.Component {
                         {
                             Object.values(nodes).map((node, key) => {
                                 let style = node.key === this.state.activeTab ? {fontWeight: 500} : {fontWeight: 200};
-                                return node.path && <a key={key} onClick={() => this.updateNode(node)}
-                                                       style={{...styles.link, ...style}}>{node.name}</a>
+                                return <a key={key} onClick={() => this.updateNode(node)} style={{...styles.link, ...style}}>{node.name}</a>
                             })
                         }
 
@@ -126,7 +125,6 @@ class DataTable extends React.Component {
                 </Fade>
             </Fade>
         };
-
 
         let table;
         let fade = true;

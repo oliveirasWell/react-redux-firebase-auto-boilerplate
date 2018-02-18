@@ -1,9 +1,8 @@
 import React from 'react';
-import {nodes} from "../../utils/dataBaseNodes";
+import {nodes} from "../../utils/custom/nodes";
 import {FirebaseService} from "../../services/FirebaseService";
 import {addGlobalError} from "../../actions/actionCreator";
 import {connect} from "react-redux";
-import {links} from "../../utils/routes";
 import {withRouter} from "react-router-dom";
 import {compose} from "recompose";
 import PropTypes from "prop-types";
@@ -40,6 +39,10 @@ class FirebaseNodeElement extends React.Component {
         obj: null,
     };
 
+    redirectToParentList = () => {
+        this.props.history.push(this.state.node.pathToMainLink);
+    };
+
     updateNode = (node, id) => {
         if ((node === null || node === undefined || id === null || id === undefined) && this.props.isEdit) {
             this.props.history.push('/edit/');
@@ -65,6 +68,7 @@ class FirebaseNodeElement extends React.Component {
 
         this.setState({obj: objToSubmit});
     };
+
     submit = (event) => {
         event.preventDefault();
 
@@ -90,9 +94,6 @@ class FirebaseNodeElement extends React.Component {
                     this.props.addMessage(error.message);
                 }
             });
-    };
-    redirectToParentList = () => {
-        this.props.history.push(links[this.state.node.key]);
     };
 
     componentWillMount() {
@@ -124,13 +125,12 @@ class FirebaseNodeElement extends React.Component {
                                 <br/>
                                 <label>{key}</label>
                                 <br/>
-                                <input className={'circularInput'} style={styles.input} id={key} type="text" defaultValue={this.state.obj[key]}
+                                <input style={styles.input} id={key} type="text" defaultValue={this.state.obj[key]}
                                        onChange={(c) => c}
                                        ref={input => this[key] = input}/>
                             </React.Fragment>
                     )
                 }
-                <br/>
                 <br/>
                 <div style={{...styles.input, ...styles.divFlex}}>
                     <input style={{...styles.input, ...styles.inputSubmit}} type="submit" value="save" className={'circularButton'}/>
@@ -140,9 +140,7 @@ class FirebaseNodeElement extends React.Component {
                 </div>
             </form>
         </div>;
-
-    }
-    ;
+    };
 }
 
 FirebaseNodeElement.propTypes = {

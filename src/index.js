@@ -4,7 +4,7 @@ import App from './components/App/App';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import registerServiceWorker from './utils/registerServiceWorker';
 import {Provider} from 'react-redux';
-import {routes} from "./utils/routes";
+import {routes} from "./utils/custom/routes";
 import configureStore from './utils/configureStore';
 import {PersistGate} from 'redux-persist/integration/react'
 

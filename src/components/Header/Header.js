@@ -3,7 +3,7 @@ import Logout from "../Logout/Logout";
 import Fade from "../Fade/Fade";
 import {connect} from "react-redux";
 import FontAwesome from 'react-fontawesome';
-import {routes} from "../../utils/routes";
+import {routes} from "../../utils/custom/routes";
 import {Link} from "react-router-dom";
 import {clearGlobalMessages} from "../../actions/actionCreator";
 
@@ -24,7 +24,6 @@ const styles = {
         fontSize: '0.7em',
         padding: '1em 2em',
         transition: 'background 200ms ease-in-out',
-
     },
     div: {
         maxWidth: '50%',
@@ -109,7 +108,7 @@ class Header extends React.Component {
                             <span style={styles.blackBoldTittle}>React</span>
                             <span style={styles.darkGreyBoldTittle}>Redux</span>
                             <span style={styles.darkGreyTittle}>Firebase</span>
-                            <span style={styles.darkGreyLightTittle}>Example</span>
+                            <span style={styles.darkGreyLightTittle}>Boilerplate</span>
                         </Link>
                     </div>
 

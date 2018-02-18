@@ -1,6 +1,6 @@
-import {facebookProvider, firebaseAuth, firebaseDatabase, googleProvider} from '../utils/firebase'
-import {nodes} from "../utils/dataBaseNodes";
-import {routes} from "../utils/routes";
+import {facebookProvider, firebaseAuth, firebaseDatabase, googleProvider} from '../utils/custom/firebase'
+import {nodes} from "../utils/custom/nodes";
+import {routes} from "../utils/custom/routes";
 
 //TODO: REMOVE THIS SHIT OF THEN CATCH FROM SERVICE
 export class FirebaseService {
@@ -94,7 +94,7 @@ export class FirebaseService {
             .then(response => {
                 let user = response.user;
                 FirebaseService.writeDataUser(user.uid, user.displayName, user.email, nodes.users);
-                addMessage(`The user ${response.email} has been successfully created.`)
+                addMessage(`The user ${response.email} has been successfully created.`);
                 redirect(routes.welcome)
             })
             .catch((error) => {
