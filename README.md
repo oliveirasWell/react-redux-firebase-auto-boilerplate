@@ -2,7 +2,28 @@
 
 A react-redux-firebase approach to create apps. Automatize crud creations of CRUDs with easy way to configure app.
 
-## Customizing
+[Check here to running example](https://react-redux-firebase-ex.firebaseapp.com)
+
+## Configuration
+
+### Firebase Credentials
+
+Add or Firebase Project info at `src/utils/custom/firebase.js`
+
+```
+const config = {
+        apiKey: "***************",
+        authDomain: "***************",
+        databaseURL: "***************",
+        projectId: "***************",
+        storageBucket: "***************",
+        messagingSenderId: "***************"
+    };
+```
+
+The project has an enviroment verification, then use or config to production at `const prodConfig`;
+
+### Firebase Realtime Database node configuration
 
 Edit the file `src/utils/custom/nodes.js` and add your firebase realtime database node information to auto create the crud page of this node.
 
@@ -42,6 +63,25 @@ What this mean:
     - `type` : HTML type of input
     - `required` : Blocks input of null or blank infos.
 - `canAddNew`: Block input of new entries.
+
+### Env configuration
+
+The project comes with this default env variables:
+
+- `REACT_APP_FACEBOOK_LOGIN_ENABLE`: Enable/Disable Google login
+- `REACT_APP_GOOGLE_LOGIN_ENABLE`:  Enable/Disable Facebook login
+- `REACT_APP_CAN_CREATE_NEW_USER_OUTSIDE_APP`:  Enable/Disable creation of users at login's page
+
+To add new env variables, add to `.env` file, then add to `/src/utils/envHelper.js`.
+
+# Run
+For the first run execute `npm install` or `yarn install`.
+To run, execute `npm start` or `yarn start`
+
+
+# Deploy
+Init the project in firebase using: `firebase init`
+Run the script `npm run deploy` or `yarn run deploy` to run the deploy in firebase hosting.
 
 #### TODOS
 
