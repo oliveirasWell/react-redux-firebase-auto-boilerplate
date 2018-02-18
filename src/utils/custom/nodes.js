@@ -9,7 +9,7 @@ export const nodes = {
         pathToNew: '/new/leitura',
         keys: [
             {name: 'Client', key: "cliente", type: 'email', required: 'true'},
-            {name: 'Date', key: "data", type: 'date', required: 'true'},
+            {name: 'Date', key: "data", type: 'datetime-local', required: 'true'},
             {name: 'Temperature', key: "temperatura", type: 'number', required: 'true'},
             {name: 'Humidity', key: "umidade", type: 'number', required: 'true'},
         ],
