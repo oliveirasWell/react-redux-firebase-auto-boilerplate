@@ -30,9 +30,19 @@ export const TableLine = ({data, keys, index, style, isHeader, removeMethod, edi
         </div>
     </div>;
 
+    const getItemOrTrueIfTrue = (item) => {
+        if (item === true) {
+            return 'true';
+        } else if (item === false) {
+            return 'false';
+        } else {
+            return item
+        }
+    };
+
     const lineContent = (key) => {
         if (key !== 'actions') {
-            return data[key];
+            return getItemOrTrueIfTrue(data[key]);
         } else if (isHeader) {
             return 'actions';
         } else {
