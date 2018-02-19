@@ -117,7 +117,9 @@ class DataTable extends React.Component {
                             })
                         }
 
-                        <button onClick={this.redirectToNew} style={{float: 'right'}} className={'circularButton'}>Add new {this.state.node.name}</button>
+                        {
+                            this.state.node.canAddNew && <button onClick={this.redirectToNew} style={{float: 'right'}} className={'circularButton'}>Add new {this.state.node.name}</button>
+                        }
                     </nav>
                 </div>
                 <Fade in={props.fade}>
