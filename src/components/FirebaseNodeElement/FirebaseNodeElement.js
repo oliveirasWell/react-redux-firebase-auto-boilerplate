@@ -39,6 +39,10 @@ class FirebaseNodeElement extends React.Component {
         obj: null,
     };
 
+    componentWillMount() {
+        this.updateNode(nodes[this.props.match.params.node], this.props.match.params.id);
+    };
+
     redirectToParentList = () => {
         this.props.history.push(this.state.node.pathToMainLink);
     };
@@ -72,10 +76,14 @@ class FirebaseNodeElement extends React.Component {
     submit = (event) => {
         event.preventDefault();
 
-        const objToSubmit = this.state.node.keys.reduce((map, key) => {
+        const objToSubmit = this.state.node.keys.filter((c) => !this.isArray(c)).reduce((map, key) => {
             map[key.key] = this[key.key].value;
             return map;
         }, {});
+
+        this.state.node.keys.filter(this.isArray).forEach(keyOfArray => {
+            objToSubmit[keyOfArray.key] = this.state.obj[keyOfArray.key].slice(0);
+        });
 
         if (!this.props.isEdit) {
             let newId = FirebaseService.pushData(this.state.node, objToSubmit);
@@ -96,9 +104,7 @@ class FirebaseNodeElement extends React.Component {
             });
     };
 
-    componentWillMount() {
-        this.updateNode(nodes[this.props.match.params.node], this.props.match.params.id);
-    };
+    isArray = key => key.type === 'array';
 
     render() {
 
@@ -114,14 +120,12 @@ class FirebaseNodeElement extends React.Component {
             </div>
         }
 
-        let isArray = key => key.type === 'array';
-
         return <div>
             <form onSubmit={this.submit}>
 
                 <h1>{this.state.node.name}</h1>
                 {
-                    this.state.node.keys.filter((c) => !isArray(c)).map(
+                    this.state.node.keys.filter((c) => !this.isArray(c)).map(
                         (key, index) =>
                             <React.Fragment key={index}>
                                 <br/>
@@ -137,7 +141,7 @@ class FirebaseNodeElement extends React.Component {
                 <br/>
                 <br/>
                 {
-                    this.state.node.keys.filter(isArray).map(
+                    this.state.node.keys.filter(this.isArray).map(
                         (key, index) =>
                             <React.Fragment key={index}>
                                 <br/>
@@ -145,13 +149,19 @@ class FirebaseNodeElement extends React.Component {
                                 <hr/>
                                 <ul>
                                     {
-                                        (this.state.obj[key.key]).map(
-                                            (arrayItem, index) =>
-                                                <li>
-                                                    {key.showKeyOfArrayElements && <span> {index} </span>}
-                                                    <span>{arrayItem}</span>
-                                                </li>
-                                        )
+
+                                        this.state.obj[key.key] === undefined
+                                            ? <li>
+                                                <span>nothing here</span>
+                                            </li>
+                                            :
+                                            (this.state.obj[key.key]).map(
+                                                (arrayItem, index) =>
+                                                    <li>
+                                                        {key.showKeyOfArrayElements && <span> {index} </span>}
+                                                        <span>{arrayItem}</span>
+                                                    </li>
+                                            )
                                     }
                                 </ul>
                             </React.Fragment>
