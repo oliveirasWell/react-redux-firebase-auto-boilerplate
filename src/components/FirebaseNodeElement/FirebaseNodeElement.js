@@ -114,24 +114,49 @@ class FirebaseNodeElement extends React.Component {
             </div>
         }
 
+        let isArray = key => key.type === 'array';
+
         return <div>
             <form onSubmit={this.submit}>
 
                 <h1>{this.state.node.name}</h1>
                 {
-                    this.state.node.keys.map(
+                    this.state.node.keys.filter((c) => !isArray(c)).map(
                         (key, index) =>
                             <React.Fragment key={index}>
                                 <br/>
                                 <label>{key.name}</label>
                                 <br/>
-                                <input style={styles.input} id={key.key} type={key.type} required={key.required} defaultValue={this.state.obj[key.key]}
+                                <input style={styles.input} id={key.key} type={key.type} required={key.required && key.type !== 'checkbox'} defaultValue={this.state.obj[key.key]}
                                        onChange={(c) => c}
                                        ref={input => this[key.key] = input}/>
                             </React.Fragment>
                     )
                 }
                 <br/>
+                <br/>
+                <br/>
+                {
+                    this.state.node.keys.filter(isArray).map(
+                        (key, index) =>
+                            <React.Fragment key={index}>
+                                <br/>
+                                <label>{key.name}</label>
+                                <hr/>
+                                <ul>
+                                    {
+                                        (this.state.obj[key.key]).map(
+                                            (arrayItem, index) =>
+                                                <li>
+                                                    {key.showKeyOfArrayElements && <span> {index} </span>}
+                                                    <span>{arrayItem}</span>
+                                                </li>
+                                        )
+                                    }
+                                </ul>
+                            </React.Fragment>
+                    )
+                }
                 <div style={{...styles.input, ...styles.divFlex}}>
                     <input style={{...styles.input, ...styles.inputSubmit}} type="submit" value="save" className={'circularButton'}/>
                     <button style={{...styles.input, ...styles.inputSubmit}} className={'circularButton'} onClick={() => this.redirectToParentList()}>

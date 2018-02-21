@@ -40,11 +40,12 @@ export const nodes = {
         pathToEdit: '/edit/devices',
         pathToNew: '/new/devices',
         keys: [
-            {name: 'Name', key: "name", type: 'text', required: 'true'},
-            {name: 'Client', key: "client", type: 'email', required: 'true'},
-            {name: 'Date of last update', key: "date", type: 'date', required: 'true'},
-            {name: 'Light', key: "light", type: 'checkbox', required: 'true'},
-            {name: 'Fan', key: "fan", type: 'checkbox', required: 'true'},
+            {name: 'Name',                      key: "name", type: 'text', required: 'true'},
+            {name: 'Client',                    key: "client", type: 'email', required: 'true'},
+            {name: 'Date of last update',       key: "date", type: 'date', required: 'true'},
+            {name: 'Light',                     key: "light", type: 'checkbox', required: 'true'},
+            {name: 'Fan',                       key: "fan", type: 'checkbox', required: 'true'},
+            {name: 'Aulas',                     key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},
         ],
         canAddNew: false,
         unique: true

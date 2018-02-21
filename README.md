@@ -62,6 +62,7 @@ What this mean:
     - `key` : Firebase Realtime Database child node key
     - `type` : HTML type of input
     - `required` : Blocks input of null or blank infos.
+    - `showKeyOfArrayElements` : In Array elements, allow to print or not array indexes.
 - `canAddNew`: Block input of new entries.
 
 The project expects you have a users node to insert users on login.
