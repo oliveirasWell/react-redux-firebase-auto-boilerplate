@@ -109,5 +109,8 @@ Run the script `npm run deploy` or `yarn run deploy` to run the deploy in fireba
 - Paginate tables
 - Make tests work
 - Separate service layer from messages e etc
+- Add google analytics https://github.com/react-ga/react-ga
+- Make objs and references to othernodes listed in input/view of node information
+- Edit lists inside input/view of nodes
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
