@@ -9,7 +9,7 @@ export const nodes = {
         pathToNew: '/new/leitura',
         keys: [
             {name: 'Client', key: "cliente", type: 'email', required: 'true'},
-            {name: 'Date', key: "data", type: 'datetime-local', required: 'true'},
+            {name: 'Date',               key: "data", type: 'epoch', required: 'true'},
             {name: 'Temperature', key: "temperatura", type: 'number', required: 'true'},
             {name: 'Humidity', key: "umidade", type: 'number', required: 'true'},
         ],
@@ -42,7 +42,7 @@ export const nodes = {
         keys: [
             {name: 'Name',                      key: "name", type: 'text', required: 'true'},
             {name: 'Client',                    key: "client", type: 'email', required: 'true'},
-            {name: 'Date of last update',       key: "date", type: 'date', required: 'true'},
+            {name: 'Last update',               key: "date", type: 'epoch', required: 'true'},
             {name: 'Light',                     key: "light", type: 'checkbox', required: 'true'},
             {name: 'Fan',                       key: "fan", type: 'checkbox', required: 'true'},
             {name: 'History',                     key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},

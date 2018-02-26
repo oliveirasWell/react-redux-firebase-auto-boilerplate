@@ -1,5 +1,6 @@
 import React from "react";
 import FontAwesome from 'react-fontawesome';
+import {dateTimeOf} from "../../utils/dateUtils";
 
 const styles = {
     td: {
@@ -30,19 +31,19 @@ export const TableLine = ({data, keys, index, style, isHeader, removeMethod, edi
         </div>
     </div>;
 
-    const getItemOrTrueIfTrue = (item) => {
+    const getItemOrTrueIfTrue = (item, key) => {
         if (item === true) {
             return 'true';
         } else if (item === false) {
             return 'false';
         } else {
-            return item
+            return key.type !== 'epoch' ? item : dateTimeOf(item)
         }
     };
 
     const lineContent = (key) => {
-        if (key !== 'actions') {
-            return getItemOrTrueIfTrue(data[key]);
+        if (key.key !== 'actions') {
+            return getItemOrTrueIfTrue(data[key.key], key);
         } else if (isHeader) {
             return 'actions';
         } else {
@@ -55,7 +56,7 @@ export const TableLine = ({data, keys, index, style, isHeader, removeMethod, edi
             {
                 [...keys, {key: 'actions'}]
                     .filter(key => !(key.type === 'array' || data[key.key] instanceof Array || data[key.key] instanceof Object))
-                    .map((key, index) => <LineTipeComponent style={styleOfLine} key={index}> {lineContent(key.key)}</LineTipeComponent>)
+                    .map((key, index) => <LineTipeComponent style={styleOfLine} key={index}> {lineContent(key)}</LineTipeComponent>)
             }
         </tr>
     );

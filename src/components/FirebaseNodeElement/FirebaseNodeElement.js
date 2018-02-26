@@ -7,6 +7,7 @@ import {withRouter} from "react-router-dom";
 import {compose} from "recompose";
 import PropTypes from "prop-types";
 import FontAwesome from 'react-fontawesome';
+import {dateTimeOf} from "../../utils/dateUtils";
 
 const styles = {
     input: {
@@ -141,7 +142,7 @@ class FirebaseNodeElement extends React.Component {
                                 <input style={styles.input} id={key.key}
                                        type={key.type}
                                        required={key.required && key.type !== 'checkbox'}
-                                       defaultValue={this.state.obj[key.key]}
+                                       defaultValue={key.type !== 'epoch' ? this.state.obj[key.key] : dateTimeOf(this.state.obj[key.key])}
                                        defaultChecked={key.type !== 'checkbox' ? null : this.state.obj[key.key]}
                                        onChange={(c) => c}
                                        ref={input => this[key.key] = input}/>
