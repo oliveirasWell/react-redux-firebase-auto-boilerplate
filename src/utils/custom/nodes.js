@@ -45,7 +45,7 @@ export const nodes = {
             {name: 'Date of last update',       key: "date", type: 'date', required: 'true'},
             {name: 'Light',                     key: "light", type: 'checkbox', required: 'true'},
             {name: 'Fan',                       key: "fan", type: 'checkbox', required: 'true'},
-            {name: 'Aulas',                     key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},
+            {name: 'History',                     key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},
         ],
         canAddNew: false,
         unique: true

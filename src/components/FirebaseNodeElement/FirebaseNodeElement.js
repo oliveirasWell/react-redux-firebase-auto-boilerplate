@@ -76,8 +76,15 @@ class FirebaseNodeElement extends React.Component {
     submit = (event) => {
         event.preventDefault();
 
+
         const objToSubmit = this.state.node.keys.filter((c) => !this.isArray(c)).reduce((map, key) => {
-            map[key.key] = this[key.key].value;
+
+            if (key.type === 'checkbox') {
+                map[key.key] = this[key.key].checked;
+            } else {
+                map[key.key] = this[key.key].value;
+            }
+
             return map;
         }, {});
 
@@ -131,7 +138,11 @@ class FirebaseNodeElement extends React.Component {
                                 <br/>
                                 <label>{key.name}</label>
                                 <br/>
-                                <input style={styles.input} id={key.key} type={key.type} required={key.required && key.type !== 'checkbox'} defaultValue={this.state.obj[key.key]}
+                                <input style={styles.input} id={key.key}
+                                       type={key.type}
+                                       required={key.required && key.type !== 'checkbox'}
+                                       defaultValue={this.state.obj[key.key]}
+                                       defaultChecked={key.type !== 'checkbox' ? null : this.state.obj[key.key]}
                                        onChange={(c) => c}
                                        ref={input => this[key.key] = input}/>
                             </React.Fragment>
