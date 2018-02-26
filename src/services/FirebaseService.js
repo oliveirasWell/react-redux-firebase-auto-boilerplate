@@ -119,13 +119,13 @@ export class FirebaseService {
         let newData = {};
         ref.once('value', (dataSnapshot) => {
 
-            if (!dataSnapshot) {
+            if (!dataSnapshot || dataSnapshot === undefined || !dataSnapshot.val() || dataSnapshot.val() === undefined) {
                 callback(null);
                 return;
             }
 
             const snap = dataSnapshot.val();
-            const keys = Object.keys(dataSnapshot.val());
+            const keys = Object.keys(snap);
             keys.forEach((key) => {
                 newData[key] = snap[key]
             });

@@ -82,7 +82,7 @@ class FirebaseNodeElement extends React.Component {
         }, {});
 
         this.state.node.keys.filter(this.isArray).forEach(keyOfArray => {
-            objToSubmit[keyOfArray.key] = this.state.obj[keyOfArray.key].slice(0);
+            objToSubmit[keyOfArray.key] = this.state.obj[keyOfArray.key] !== undefined ? this.state.obj[keyOfArray.key].slice(0) : null;
         });
 
         if (!this.props.isEdit) {
