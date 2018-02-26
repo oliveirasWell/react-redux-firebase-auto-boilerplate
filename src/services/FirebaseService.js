@@ -27,7 +27,7 @@ export class FirebaseService {
                 }
             });
 
-            callback(items);
+            callback(items.reverse());
         });
     };
 
