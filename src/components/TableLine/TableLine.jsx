@@ -36,6 +36,8 @@ export const TableLine = ({data, keys, index, style, isHeader, removeMethod, edi
             return 'true';
         } else if (item === false) {
             return 'false';
+        } else if (isHeader) {
+            return key.name;
         } else {
             return key.type !== 'epoch' ? item : dateTimeOf(item)
         }
