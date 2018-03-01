@@ -49,5 +49,20 @@ export const nodes = {
         ],
         canAddNew: false,
         unique: true
+    },
+    motion: {
+        name: 'Motion',
+        key: 'motion',
+        flat: c => c,
+        orderByChild: null,
+        pathToMainLink: '/data/motion',
+        pathToEdit: '/edit/motion',
+        pathToNew: '/new/motion',
+        keys: [
+            {name: 'Status',                      key: "state", type: 'bool', required: 'true'},
+            {name: 'Date',                 key: "date", type: 'epoch', required: 'true'},
+        ],
+        canAddNew: true,
+        unique: false
     }
 };

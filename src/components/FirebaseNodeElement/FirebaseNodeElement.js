@@ -41,14 +41,10 @@ class FirebaseNodeElement extends React.Component {
     };
 
     componentWillMount() {
-        this.updateNode(nodes[this.props.match.params.node], this.props.match.params.id);
-    };
 
-    redirectToParentList = () => {
-        this.props.history.push(this.state.node.pathToMainLink);
-    };
+        const node = nodes[this.props.match.params.node];
+        const id = this.props.match.params.id;
 
-    updateNode = (node, id) => {
         if ((node === null || node === undefined || id === null || id === undefined) && this.props.isEdit) {
             this.props.history.push('/edit/');
             return;
@@ -74,11 +70,16 @@ class FirebaseNodeElement extends React.Component {
         this.setState({obj: objToSubmit});
     };
 
+    redirectToParentList = (node) => {
+        this.props.history.push(node.pathToMainLink);
+    };
+
     submit = (event) => {
         event.preventDefault();
 
+        let node = this.state.node === undefined ? nodes[this.props.match.params.node] : this.state.node;
 
-        const objToSubmit = this.state.node.keys.filter((c) => !this.isArray(c)).reduce((map, key) => {
+        const objToSubmit = node.keys.filter((c) => !this.isArray(c)).reduce((map, key) => {
 
             if (key.type === 'checkbox') {
                 map[key.key] = this[key.key].checked;
@@ -89,21 +90,21 @@ class FirebaseNodeElement extends React.Component {
             return map;
         }, {});
 
-        this.state.node.keys.filter(this.isArray).forEach(keyOfArray => {
+        node.keys.filter(this.isArray).forEach(keyOfArray => {
             objToSubmit[keyOfArray.key] = this.state.obj[keyOfArray.key] !== undefined ? this.state.obj[keyOfArray.key].slice(0) : null;
         });
 
         if (!this.props.isEdit) {
-            let newId = FirebaseService.pushData(this.state.node, objToSubmit);
-            this.props.addMessage(`${this.state.node.name} ${newId} has been successful created.`);
-            this.redirectToParentList();
+            let newId = FirebaseService.pushData(node, objToSubmit);
+            this.props.addMessage(`${node.name} ${newId} has been successful created.`);
+            this.redirectToParentList(node);
             return;
         }
 
-        FirebaseService.writeData(this.state.id, objToSubmit, this.state.node)
+        FirebaseService.writeData(this.state.id, objToSubmit, node)
             .then(() => {
                 this.props.addMessage(`${this.state.node.name} ${this.state.id} has been successful updated.`);
-                this.redirectToParentList();
+                this.redirectToParentList(node);
             })
             .catch(error => {
                 if (error != null || error !== undefined) {
@@ -116,8 +117,10 @@ class FirebaseNodeElement extends React.Component {
 
     render() {
 
+        const {node} = this.state;
+
         //FIXME why? why? why?
-        if (this.state.node == null) {
+        if (node == null) {
             return null;
         }
 
@@ -131,9 +134,9 @@ class FirebaseNodeElement extends React.Component {
         return <div>
             <form onSubmit={this.submit}>
 
-                <h1>{this.state.node.name}</h1>
+                <h1>{node.name}</h1>
                 {
-                    this.state.node.keys.filter((c) => !this.isArray(c)).map(
+                    node.keys.filter((c) => !this.isArray(c)).map(
                         (key, index) =>
                             <React.Fragment key={index}>
                                 <br/>
@@ -153,7 +156,7 @@ class FirebaseNodeElement extends React.Component {
                 <br/>
                 <br/>
                 {
-                    this.state.node.keys.filter(this.isArray).map(
+                    node.keys.filter(this.isArray).map(
                         (key, index) =>
                             <React.Fragment key={index}>
                                 <br/>
@@ -181,7 +184,7 @@ class FirebaseNodeElement extends React.Component {
                 }
                 <div style={{...styles.input, ...styles.divFlex}}>
                     <input style={{...styles.input, ...styles.inputSubmit}} type="submit" value="save" className={'circularButton'}/>
-                    <button style={{...styles.input, ...styles.inputSubmit}} className={'circularButton'} onClick={() => this.redirectToParentList()}>
+                    <button style={{...styles.input, ...styles.inputSubmit}} className={'circularButton'} onClick={() => this.redirectToParentList(node)}>
                         back
                     </button>
                 </div>
