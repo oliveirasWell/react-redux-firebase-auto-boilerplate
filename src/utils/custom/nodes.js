@@ -12,6 +12,7 @@ export const nodes = {
             {name: 'Date',               key: "data", type: 'epoch', required: 'true'},
             {name: 'Temperature', key: "temperatura", type: 'number', required: 'true'},
             {name: 'Humidity', key: "umidade", type: 'number', required: 'true'},
+            {name: 'Motion',                      key: "motion", type: 'bool', required: 'true'},
         ],
         canAddNew: true,
         unique: false
