@@ -9,5 +9,6 @@ export const routes = {
     new: '/new/:node',
     edit: '/edit/:node/:id',
     welcome: '/welcome',
+    accessDenied : '/access-denied'
     /*add your routes above*/
 };

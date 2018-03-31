@@ -15,6 +15,7 @@ import {FirebaseService} from "../../services/FirebaseService";
 import {Footer} from "../Footer/Footer";
 import NewUser from "../NewUser/NewUser";
 import FirebaseNodeElement from "../FirebaseNodeElement/FirebaseNodeElement";
+import AccessDenied from "../AccessDenied/AccessDenied";
 
 const styles = {
     container: {
@@ -46,6 +47,9 @@ class App extends React.Component {
 
                         <Route exact path={routes.welcome}
                                render={(props) => <NavigationWrapper component={Welcome}     {...props}/>}/>
+
+                        <Route exact path={routes.accessDenied}
+                               render={(props) => <NavigationWrapper component={AccessDenied}     {...props}/>}/>
 
                         <Route exact path={routes.data}
                                render={(props) => <NavigationWrapper component={DataTable}   {...props}/>}/>

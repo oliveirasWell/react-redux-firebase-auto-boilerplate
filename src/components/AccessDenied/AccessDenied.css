@@ -1,0 +1,10 @@
+
+.access-denied-link:hover {
+    color: #a1a1a1;
+    transition: color 500ms ease-in-out;
+}
+
+.access-denied-link {
+    color: #404040;
+    transition: color 500ms ease-in-out;
+}

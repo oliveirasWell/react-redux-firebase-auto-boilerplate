@@ -13,6 +13,7 @@ export const nodes = {
             {name: 'Temperature',           key: "temperatura", type: 'number', required: 'true'},
             {name: 'Humidity',              key: "umidade", type: 'number', required: 'true'},
             {name: 'Motion',                key: "motion", type: 'bool', required: 'true'},
+            {name: 'Last update',           key: "lastUpdate", type: 'epoch', required: 'true', contentEditable:false},
         ],
         canAddNew: true,
         unique: false,
@@ -29,7 +30,8 @@ export const nodes = {
         keys: [
             {name: 'Name',  key: "displayName", type: 'text', required: 'true'},
             {name: 'Email', key: "email", type: 'email', required: 'true'},
-            {name: 'Admin', key: "isAdmin", type: 'bool', required: 'true'},
+            {name: 'Admin', key: "isAdmin", type: 'checkbox', required: 'true'},
+            {name: 'Last update', key: "lastUpdate", type: 'epoch', required: 'true', contentEditable:false},
         ],
         canAddNew: true,
         unique: false,
@@ -46,7 +48,7 @@ export const nodes = {
         keys: [
             {name: 'Name',                      key: "name", type: 'text', required: 'true'},
             {name: 'Client',                    key: "client", type: 'email', required: 'true'},
-            {name: 'Last update',               key: "date", type: 'epoch', required: 'true'},
+            {name: 'Last update',               key: "lastUpdate", type: 'epoch', required: 'true', contentEditable:false},
             {name: 'Light',                     key: "light", type: 'checkbox', required: 'true'},
             {name: 'Fan',                       key: "fan", type: 'checkbox', required: 'true'},
             {name: 'History',                   key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},
@@ -66,6 +68,7 @@ export const nodes = {
         keys: [
             {name: 'Status',    key: "state", type: 'bool', required: 'true'},
             {name: 'Date',      key: "date", type: 'epoch', required: 'true'},
+            {name: 'Last update', key: "lastUpdate", type: 'epoch', required: 'true', contentEditable:false},
         ],
         canAddNew: true,
         unique: false,

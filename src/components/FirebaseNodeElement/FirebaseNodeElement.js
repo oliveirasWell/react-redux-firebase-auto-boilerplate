@@ -7,7 +7,8 @@ import {withRouter} from "react-router-dom";
 import {compose} from "recompose";
 import PropTypes from "prop-types";
 import FontAwesome from 'react-fontawesome';
-import {dateTimeOf} from "../../utils/dateUtils";
+import {dateTimeOf, epochFromDate} from "../../utils/dateUtils";
+import moment from "moment";
 
 const styles = {
     input: {
@@ -83,12 +84,16 @@ class FirebaseNodeElement extends React.Component {
 
             if (key.type === 'checkbox') {
                 map[key.key] = this[key.key].checked;
+            } else if(key.type === 'datetime') {
+                map[key.key] = epochFromDate(this[key.key].value);
             } else {
                 map[key.key] = this[key.key].value;
             }
 
             return map;
         }, {});
+
+        objToSubmit['lastUpdate'] = moment().unix();
 
         node.keys.filter(this.isArray).forEach(keyOfArray => {
             objToSubmit[keyOfArray.key] = this.state.obj[keyOfArray.key] !== undefined ? this.state.obj[keyOfArray.key].slice(0) : null;
@@ -124,7 +129,7 @@ class FirebaseNodeElement extends React.Component {
             return null;
         }
 
-        //Why this? Because firebase sucks.
+        //FIXME Why this? Because firebase sucks.
         if (!this.state.obj || this.state.obj === undefined) {
             return <div style={styles.divFontAwesome}>
                 &nbsp; <FontAwesome name='bolt' spin/>
@@ -144,6 +149,7 @@ class FirebaseNodeElement extends React.Component {
                                 <br/>
                                 <input style={styles.input} id={key.key}
                                        type={key.type}
+                                       disabled={key.contentEditable === false}
                                        required={key.required && key.type !== 'checkbox'}
                                        defaultValue={key.type !== 'epoch' ? this.state.obj[key.key] : dateTimeOf(this.state.obj[key.key])}
                                        defaultChecked={key.type !== 'checkbox' ? null : this.state.obj[key.key]}
@@ -152,6 +158,8 @@ class FirebaseNodeElement extends React.Component {
                             </React.Fragment>
                     )
                 }
+
+                {/*FIXME do not fucking use br*/}
                 <br/>
                 <br/>
                 <br/>

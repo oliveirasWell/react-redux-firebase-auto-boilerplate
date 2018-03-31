@@ -57,16 +57,17 @@ class DataTable extends React.Component {
                     console.log(this.state.userData);
 
 
-                    let callback = (returnData) => this.setState({userData: returnData}, () => {
+                    let callback = (returnData) => this.setState({userData: returnData},
+                        () => {
 
-                        console.log(this.props.userAuth.email);
-                        console.log(this.state.userData);
+                            console.log(this.props.userAuth.email);
+                            console.log(this.state.userData);
 
-                        if (this.state.userData != null && !this.state.userData.isAdmin){
-                            this.props.history.push('/data/');
-                        }
+                            if (this.state.userData != null && !this.state.userData.isAdmin) {
+                                this.props.history.push('/access-denied/');
+                            }
 
-                    });
+                        });
 
                     FirebaseService.getUniqueDataBy(this.state.node, this.props.userAuth.uid, callback);
 
