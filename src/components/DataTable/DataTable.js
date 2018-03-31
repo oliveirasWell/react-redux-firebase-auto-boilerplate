@@ -36,6 +36,7 @@ class DataTable extends React.Component {
         activeTab: null,
         node: null,
         in: false,
+        userData: null,
     };
 
     updateNode = (node) => {
@@ -45,15 +46,37 @@ class DataTable extends React.Component {
         }
 
         this.setState(() => {
-            return {
-                activeTab: node.key,
-                node: node,
+                return {
+                    activeTab: node.key,
+                    node: node,
+                }
+            }, () => {
+                if (this.state.node.onlyAdmin) {
+
+                    console.log(this.props.userAuth.email);
+                    console.log(this.state.userData);
+
+
+                    let callback = (returnData) => this.setState({userData: returnData}, () => {
+
+                        console.log(this.props.userAuth.email);
+                        console.log(this.state.userData);
+
+                        if (this.state.userData != null && !this.state.userData.isAdmin){
+                            this.props.history.push('/data/');
+                        }
+
+                    });
+
+                    FirebaseService.getUniqueDataBy(this.state.node, this.props.userAuth.uid, callback);
+
+                }
+
+                this.props.history.replace(node.pathToMainLink);
+                FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
+
             }
-        });
-
-        this.props.history.replace(node.pathToMainLink);
-
-        FirebaseService.getAllDataBy(node, dataIn => this.setState({dataList: dataIn}), 50, c => node.flat(c), node.orderByChild);
+        );
     };
 
     componentWillMount() {
@@ -173,4 +196,10 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(null, mapDispatchToProps)(DataTable);
+const mapStateToProps = state => {
+    return {
+        userAuth: state.userAuth,
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(DataTable);

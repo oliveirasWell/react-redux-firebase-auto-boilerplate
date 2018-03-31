@@ -8,14 +8,15 @@ export const nodes = {
         pathToEdit: '/edit/leitura',
         pathToNew: '/new/leitura',
         keys: [
-            {name: 'Client', key: "cliente", type: 'email', required: 'true'},
-            {name: 'Date',               key: "data", type: 'epoch', required: 'true'},
-            {name: 'Temperature', key: "temperatura", type: 'number', required: 'true'},
-            {name: 'Humidity', key: "umidade", type: 'number', required: 'true'},
-            {name: 'Motion',                      key: "motion", type: 'bool', required: 'true'},
+            {name: 'Client',                key: "cliente", type: 'email', required: 'true'},
+            {name: 'Date',                  key: "data", type: 'epoch', required: 'true'},
+            {name: 'Temperature',           key: "temperatura", type: 'number', required: 'true'},
+            {name: 'Humidity',              key: "umidade", type: 'number', required: 'true'},
+            {name: 'Motion',                key: "motion", type: 'bool', required: 'true'},
         ],
         canAddNew: true,
-        unique: false
+        unique: false,
+        onlyAdmin: false,
     },
     users: {
         name: 'Users',
@@ -26,11 +27,13 @@ export const nodes = {
         pathToEdit: '/edit/users',
         pathToNew: '/new/users',
         keys: [
-            {name: 'Name', key: "displayName", type: 'text', required: 'true'},
+            {name: 'Name',  key: "displayName", type: 'text', required: 'true'},
             {name: 'Email', key: "email", type: 'email', required: 'true'},
+            {name: 'Admin', key: "isAdmin", type: 'bool', required: 'true'},
         ],
         canAddNew: true,
-        unique: false
+        unique: false,
+        onlyAdmin: true,
     },
     devices: {
         name: 'Devices',
@@ -46,10 +49,11 @@ export const nodes = {
             {name: 'Last update',               key: "date", type: 'epoch', required: 'true'},
             {name: 'Light',                     key: "light", type: 'checkbox', required: 'true'},
             {name: 'Fan',                       key: "fan", type: 'checkbox', required: 'true'},
-            {name: 'History',                     key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},
+            {name: 'History',                   key: "aulas", type: 'array', required: 'false', showKeyOfArrayElements:true},
         ],
         canAddNew: false,
-        unique: true
+        unique: true,
+        onlyAdmin: false,
     },
     motion: {
         name: 'Motion',
@@ -60,10 +64,11 @@ export const nodes = {
         pathToEdit: '/edit/motion',
         pathToNew: '/new/motion',
         keys: [
-            {name: 'Status',                      key: "state", type: 'bool', required: 'true'},
-            {name: 'Date',                 key: "date", type: 'epoch', required: 'true'},
+            {name: 'Status',    key: "state", type: 'bool', required: 'true'},
+            {name: 'Date',      key: "date", type: 'epoch', required: 'true'},
         ],
         canAddNew: true,
-        unique: false
+        unique: false,
+        onlyAdmin: false,
     }
 };
