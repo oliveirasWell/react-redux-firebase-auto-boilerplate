@@ -103,7 +103,7 @@ Run the script `npm run deploy` or `yarn run deploy` to run the deploy in fireba
 - Google login creates a new user no matter he has or not acess
 - Fix table's header on top
 - Add user to firebaseAuth when created inside app
-- Feature branch using material-ui
+- Feature branch using material-ui (maybe not)
 - Extract wrappers to HOC
 - Keep a record of user is active
 - Paginate tables
