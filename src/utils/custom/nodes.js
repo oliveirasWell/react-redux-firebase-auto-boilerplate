@@ -18,6 +18,8 @@ export const nodes = {
         canAddNew: true,
         unique: false,
         onlyAdmin: false,
+        canRemove: true,
+        canEdit: true,
     },
     users: {
         name: 'Users',
@@ -36,6 +38,8 @@ export const nodes = {
         canAddNew: true,
         unique: false,
         onlyAdmin: true,
+        canRemove: true,
+        canEdit: true,
     },
     devices: {
         name: 'Devices',
@@ -56,6 +60,8 @@ export const nodes = {
         canAddNew: false,
         unique: true,
         onlyAdmin: false,
+        canRemove: false,
+        canEdit: true,
     },
     motion: {
         name: 'Motion',
@@ -73,5 +79,7 @@ export const nodes = {
         canAddNew: true,
         unique: false,
         onlyAdmin: false,
+        canRemove: true,
+        canEdit: true,
     }
 };

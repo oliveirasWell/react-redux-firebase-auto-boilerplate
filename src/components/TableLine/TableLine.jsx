@@ -18,17 +18,31 @@ const styles = {
     }
 };
 
-export const TableLine = ({data, keys, index, style, isHeader, removeMethod, editMethod}) => {
+export const TableLine = ({data, keys, index, style, isHeader, removeMethod, editMethod, renderRemove, renderEdit}) => {
     const styleOfLine = {...(!!style ? {...styles.td, ...style} : styles.td)};
     const LineTipeComponent = isHeader ? 'th' : 'td';
 
+
+    console.log(renderRemove);
+    console.log(renderEdit);
+
     const actions = (keyOfItem) => <div style={{...(!isHeader ? styles.actions : null)}}>
-        <div style={styles.marginRight} onClick={() => removeMethod(keyOfItem)}>
-            <FontAwesome name='trash'/> Remove
-        </div>
-        <div style={styles.marginRight} onClick={() => editMethod(keyOfItem)}>
-            <FontAwesome name='pencil'/> Edit
-        </div>
+
+        {
+            renderRemove &&
+            <div style={styles.marginRight} onClick={() => removeMethod(keyOfItem)}>
+                <FontAwesome name='trash'/> Remove
+            </div>
+        }
+
+        {
+            renderEdit &&
+            <div style={styles.marginRight} onClick={() => editMethod(keyOfItem)}>
+                <FontAwesome name='pencil'/> Edit
+            </div>
+        }
+
+
     </div>;
 
     const getItemOrTrueIfTrue = (item, key) => {
@@ -46,7 +60,7 @@ export const TableLine = ({data, keys, index, style, isHeader, removeMethod, edi
     const lineContent = (key) => {
         if (key.key !== 'actions') {
             return getItemOrTrueIfTrue(data[key.key], key);
-        } else if (isHeader) {
+        } else if (isHeader && (renderRemove || renderEdit)) {
             return 'actions';
         } else {
             return actions(data['.key']);

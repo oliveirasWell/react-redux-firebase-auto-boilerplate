@@ -98,7 +98,11 @@ class DataTable extends React.Component {
                 return map;
             }, {});
 
-        const header = <TableLine keys={keys} data={keyToHeader} isHeader={true} style={styles.header}/>;
+        console.log(this.state.node);
+
+        let canEdit = this.state.node.canEdit;
+        let canRemove = this.state.node.canRemove;
+        const header = <TableLine keys={keys} data={keyToHeader} isHeader={true} style={styles.header} renderRemove={canRemove} renderEdit={canEdit}/>;
         const dataList = this.state.dataList.map((leitura, index) => {
             return <TableLine data={leitura}
                               index={index}
@@ -107,6 +111,8 @@ class DataTable extends React.Component {
                               keys={keys}
                               removeMethod={(id) => this.removeNode(id)}
                               editMethod={(id) => this.editNode(id)}
+                              renderRemove={canRemove}
+                              renderEdit={canEdit}
             />
         });
 
